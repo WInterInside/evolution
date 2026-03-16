@@ -1,0 +1,62 @@
+@use "base/mixins" as mixins;
+
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-Light",
+  300,
+  normal
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-LightItalic",
+  300,
+  italic
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-Regular",
+  400,
+  normal
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-RegularItalic",
+  400,
+  italic
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-Medium",
+  500,
+  normal
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-MediumItalic",
+  500,
+  italic
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-Bold",
+  700,
+  normal
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-BoldItalic",
+  700,
+  italic
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-Black",
+  900,
+  normal
+);
+@include mixins.font-face(
+  "PitagonSansMono",
+  "PitagonSansMono-BlackItalic",
+  900,
+  italic
+);

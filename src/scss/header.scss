@@ -1,0 +1,117 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
+.header {
+  background: linear-gradient(180deg, #01fe48 0%, #d8dacb 100%);
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    padding: 40px 0;
+  }
+
+  &__side {
+    position: relative;
+    padding-left: 104px;
+    display: flex;
+    gap: 172px;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__button {
+    padding: 8px 16px;
+    border-radius: 40px;
+    border: 1px solid #000;
+
+    &--black {
+      background-color: #000;
+      color: #0ffb51;
+    }
+  }
+
+  &__notice {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  &__body {
+    position: absolute;
+    left: 0;
+    top: 40%;
+  }
+
+  &__features {
+    display: flex;
+    margin-top: 77px;
+    gap: 60px;
+  }
+
+  &__features-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 360px;
+
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+
+  &__features-caption {
+    font-weight: 700;
+  }
+
+  &__features-text {
+    padding-left: 38px;
+  }
+
+  &__dot {
+    position: absolute;
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #000;
+
+    &--1 {
+      top: 30%;
+      left: 34%;
+    }
+    &--2 {
+      top: 30%;
+      left: 54%;
+    }
+    &--3 {
+      top: 30%;
+      left: 74%;
+    }
+    &--4 {
+      top: 70%;
+      left: 14%;
+    }
+    &--5 {
+      top: 70%;
+      left: 34%;
+    }
+    &--6 {
+      top: 70%;
+      left: 84%;
+    }
+  }
+}
+
+@media #{vars.$small} {
+  .header {
+  }
+}
+
+@media #{vars.$xsmall} {
+  .header {
+  }
+}
