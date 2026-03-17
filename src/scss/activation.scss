@@ -1,0 +1,118 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
+.activation {
+  position: relative;
+  padding: 127px 0 140px 0;
+  background-color: #d8dacb;
+  //   background: linear-gradient(180deg, #d8dacb 0%, #ec5a0f 100%);
+
+  &__figure {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    border: 2px solid #000;
+    width: 100%;
+    height: 260px;
+    border-radius: 50%;
+    animation: heightBounceActivation 3s ease-in-out infinite;
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__text {
+    position: absolute;
+    padding: 8px 16px;
+    border-radius: 40px;
+    border: 1px solid #000;
+    top: -100px;
+  }
+
+  &__text-decor {
+    margin-top: 108px;
+    margin-left: 25%;
+  }
+
+  &__instruction {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 316px;
+    margin-left: auto;
+    margin-right: 200px;
+
+    & span:first-child {
+      font-weight: 700;
+    }
+
+    & span:nth-child(2) {
+      text-transform: none;
+    }
+  }
+
+  &__dot {
+    position: absolute;
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #000;
+
+    &--1 {
+      top: 30%;
+      left: 34%;
+    }
+    &--2 {
+      top: 30%;
+      left: 54%;
+    }
+    &--3 {
+      top: 30%;
+      left: 74%;
+    }
+    &--4 {
+      top: 70%;
+      left: 14%;
+    }
+  }
+
+  &__game {
+    position: relative;
+    display: flex;
+    z-index: 99;
+  }
+
+  canvas {
+    width: 100%;
+    // max-width: 1328px;
+    margin: 0 auto;
+    height: auto;
+    touch-action: none;
+  }
+
+  &__finish {
+    position: absolute;
+    right: -10px;
+    bottom: 50%;
+    transform: translateY(70%);
+    width: 54px;
+    height: 172px;
+    pointer-events: none;
+  }
+}
+
+@keyframes heightBounceActivation {
+  0% {
+    height: 270px;
+  }
+  50% {
+    height: 50px;
+  }
+  100% {
+    height: 270px;
+  }
+}

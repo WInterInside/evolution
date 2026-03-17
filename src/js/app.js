@@ -216,3 +216,155 @@ updateTitle();
 
 // Меняем текст при смене слайда
 swiper.on('slideChange', updateTitle);
+
+class MazeGame {
+  constructor(canvasId, imgSrc, start, finish) {
+    this.canvas = document.getElementById(canvasId);
+    this.ctx = this.canvas.getContext("2d");
+
+    // Скрытый канвас для коллизий
+    this.collisionCanvas = document.createElement("canvas");
+    this.collisionCtx = this.collisionCanvas.getContext("2d");
+
+    this.img = new Image();
+    this.img.src = imgSrc;
+
+    this.START = start;
+    this.FINISH = finish;
+
+    this.playing = false;
+    this.playerRadius = 8;
+
+    this.playerX = this.START.x;
+    this.playerY = this.START.y;
+
+    this.img.onload = () => {
+      this.canvas.width = this.img.width;
+      this.canvas.height = this.img.height;
+
+      this.collisionCanvas.width = this.img.width;
+      this.collisionCanvas.height = this.img.height;
+      this.collisionCtx.drawImage(this.img, 0, 0);
+
+      this.draw();
+    };
+
+    this.initEvents();
+  }
+
+  initEvents() {
+    this.canvas.addEventListener("mousedown", e => this.startGame(this.getCoords(e)));
+    this.canvas.addEventListener("mousemove", e => this.move(this.getCoords(e)));
+    this.canvas.addEventListener("mouseup", () => this.resetPlayer());
+    this.canvas.addEventListener("mouseleave", () => { if (this.playing) this.lose(); });
+
+    this.canvas.addEventListener("touchstart", e => this.startGame(this.getCoords(e.touches[0])));
+    this.canvas.addEventListener("touchmove", e => {
+      e.preventDefault();
+      this.move(this.getCoords(e.touches[0]));
+    });
+    this.canvas.addEventListener("touchend", () => this.resetPlayer());
+
+    window.addEventListener("resize", () => this.draw());
+  }
+
+  getCoords(e) {
+    const rect = this.canvas.getBoundingClientRect();
+    const scaleX = this.canvas.width / rect.width;
+    const scaleY = this.canvas.height / rect.height;
+    return {
+      x: Math.floor((e.clientX - rect.left) * scaleX),
+      y: Math.floor((e.clientY - rect.top) * scaleY)
+    };
+  }
+
+  inCircle(x, y, circle) {
+    const dx = x - circle.x;
+    const dy = y - circle.y;
+    return dx * dx + dy * dy <= circle.r * circle.r;
+  }
+
+  checkCollision(x, y) {
+    // Вне канваса → поражение
+    if (x < 0 || x >= this.canvas.width || y < 0 || y >= this.canvas.height) return true;
+
+    // Проверка по скрытому канвасу (исходный лабиринт)
+    const [r, g, b] = this.collisionCtx.getImageData(x, y, 1, 1).data;
+    return r < 40 && g < 40 && b < 40; // черная стена
+  }
+
+  startGame({ x, y }) {
+    if (this.inCircle(x, y, this.START)) this.playing = true;
+  }
+
+  move({ x, y }) {
+    if (!this.playing) return;
+
+    if (this.checkCollision(x, y)) {
+      this.lose();
+      return;
+    }
+
+    this.playerX = x;
+    this.playerY = y;
+
+    if (this.inCircle(x, y, this.FINISH)) {
+      this.win();
+      return;
+    }
+
+    this.draw();
+  }
+
+  draw() {
+    const { ctx, canvas } = this;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(this.img, 0, 0);
+
+    // Старт
+    ctx.beginPath();
+    ctx.arc(this.START.x, this.START.y, this.START.r, 0, Math.PI * 2);
+    ctx.fillStyle = "green";
+    ctx.fill();
+
+    // Финиш
+    ctx.beginPath();
+    ctx.arc(this.FINISH.x, this.FINISH.y, this.FINISH.r, 0, Math.PI * 2);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+
+    // Игрок
+    if (this.playerX !== null && this.playerY !== null) {
+      ctx.beginPath();
+      ctx.arc(this.playerX, this.playerY, this.playerRadius, 0, Math.PI * 2);
+      ctx.fillStyle = "red";
+      ctx.fill();
+    }
+  }
+
+  resetPlayer() {
+    this.playing = false;
+    this.playerX = this.START.x;
+    this.playerY = this.START.y;
+    this.draw();
+  }
+
+  lose() {
+    alert("Проигрыш 😢");
+    this.resetPlayer();
+  }
+
+  win() {
+    alert("Победа 🎉");
+    this.resetPlayer();
+  }
+}
+
+// Инициализация
+const game = new MazeGame(
+  "mazeCanvas",
+  "assets/images/maze.png",
+  { x: 140, y: 60, r: 40 },
+  { x: 1315, y: 380, r: 10 }
+);
