@@ -14,7 +14,7 @@
     width: 100%;
     height: 713px;
     border-radius: 50%;
-    animation: heightBounce 3s ease-in-out infinite;
+    animation: heightBounceHero 3s ease-in-out infinite;
   }
 
   &__content {
@@ -55,7 +55,7 @@
   }
 }
 
-@keyframes heightBounce {
+@keyframes heightBounceHero {
   0% {
     height: 713px;
   }

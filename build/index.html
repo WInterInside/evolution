@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <link rel="shortcut icon" href="assets/favicons/favicon.png" type="image/x-icon" />
-        <link rel="stylesheet" href="css/style.min.css" />
-        <title>Evolution</title>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" href="assets/favicons/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <title>Evolution</title>
+  </head>
 </html>
 
 
@@ -131,6 +136,50 @@
 				</div>
 			</section>
 
+			<section class="corpus">
+				<div class="corpus__dot corpus__dot--1"></div>
+				<div class="corpus__dot corpus__dot--2"></div>
+				<div class="corpus__dot corpus__dot--3"></div>
+				<div class="corpus__dot corpus__dot--4"></div>
+				<div class="container">
+					<div class="corpus__content">
+						<div class="corpus__figure"></div>
+						<span class="corpus__text">кпсл</span>
+						<img class="corpus__text-title" src="assets/images/eczo-title.svg" alt="" />
+					</div>
+					<img class="corpus__text-decor" src="assets/images/curpus-title.svg" alt="" />
+					<div class="corpus__instruction">
+						<span>[инструкция]</span>
+						<span>Внешняя оболочка влияет на восприятие и характер интеграции модулей. Выберите форму, соответсвующую вашей конфигурации</span>
+					</div>
+				</div>
+
+				<div class="container">
+					<div class="swiper">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide"><img src="assets/images/1.png" /></div>
+							<div class="swiper-slide"><img src="assets/images/2.png" /></div>
+							<div class="swiper-slide"><img src="assets/images/4.png" /></div>
+							<div class="swiper-slide"><img src="assets/images/5.png" /></div>
+							<div class="swiper-slide"><img src="assets/images/6.png" /></div>
+						</div>
+					</div>
+					
+
+						<div class="corpus__contorls">
+							<div class="swiper-button-next"><img src="assets/images/arr-left.svg" /></div>
+							<div class="swiper-title">
+								<span>классическая</span>
+								<span>два</span>
+								<span>три</span>
+								<span>четыре</span>
+								<span>пять</span>
+							</div>
+							<div class="swiper-button-prev"><img src="assets/images/arr-right.svg" /></div>
+						</div>
+				</div>
+			</section>
+
 		</main>
 
 		<footer class="footer">
@@ -144,7 +193,8 @@
 
 	</div>
 
-	<script src="js/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="js/main.min.js"></script>
 
 </body>
 

@@ -180,3 +180,39 @@ document.addEventListener('DOMContentLoaded', () =>
     maxCards: 3
   })
 );
+
+const swiper = new Swiper('.swiper', {
+  slidesPerView: 3,
+  centeredSlides: true,
+  loop: true,
+  spaceBetween: 0,
+  initialSlide: 0, // 3-й слайд активный
+  effect: 'coverflow',
+  coverflowEffect: {
+    rotate: 0,
+    stretch: 0,
+    depth: 300,
+    modifier: 2,
+    slideShadows: false
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+
+// Получаем все span с текстом
+const titles = document.querySelectorAll('.swiper-title span');
+
+// Функция для показа только соответствующего текста
+function updateTitle() {
+  titles.forEach((el, i) => {
+    el.style.display = i === swiper.realIndex ? 'inline' : 'none';
+  });
+}
+
+// Показываем правильный текст при инициализации
+updateTitle();
+
+// Меняем текст при смене слайда
+swiper.on('slideChange', updateTitle);

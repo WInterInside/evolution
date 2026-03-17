@@ -1,0 +1,172 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
+.corpus {
+  position: relative;
+  padding: 127px 0 140px 0;
+  background: linear-gradient(
+    178.76deg,
+    #d8dacb 1.03%,
+    #cbdbcf 14.55%,
+    #21e5fb 50.62%,
+    #c5dbd0 83.69%,
+    #d8dacb 98.97%
+  );
+
+  &__figure {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    border: 2px solid #000;
+    width: 100%;
+    height: 400px;
+    border-radius: 50%;
+    animation: heightBounceCorpus 3s ease-in-out infinite;
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__text {
+    position: absolute;
+    padding: 8px 16px;
+    border-radius: 40px;
+    border: 1px solid #000;
+    top: -100px;
+  }
+
+  &__text-decor {
+    margin-top: 108px;
+    margin-left: 30%;
+  }
+
+  &__instruction {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 316px;
+    margin-left: auto;
+
+    & span:first-child {
+      font-weight: 700;
+    }
+
+    & span:nth-child(2) {
+      text-transform: none;
+    }
+  }
+
+  &__dot {
+    position: absolute;
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #000;
+
+    &--1 {
+      top: 30%;
+      left: 34%;
+    }
+    &--2 {
+      top: 30%;
+      left: 54%;
+    }
+    &--3 {
+      top: 30%;
+      left: 74%;
+    }
+    &--4 {
+      top: 70%;
+      left: 14%;
+    }
+  }
+
+  &__contorls {
+    position: relative;
+    z-index: 99;
+    display: flex;
+    gap: 32px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    & .swiper-title {
+      font-size: 40px;
+    }
+  }
+}
+
+@keyframes heightBounceCorpus {
+  0% {
+    height: 400px;
+  }
+  50% {
+    height: 50px;
+  }
+  100% {
+    height: 400px;
+  }
+}
+
+.swiper {
+  height: 560px; /* общая высота слайдера */
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* картинка полностью заполняет слайд */
+  border-radius: 10px;
+}
+
+.swiper-title span {
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+.swiper-title span[style*="inline"] {
+  opacity: 1;
+}
+
+/* Сброс всего, что задаёт Swiper */
+.corpus__contorls .swiper-button-prev,
+.corpus__contorls .swiper-button-next {
+  all: unset; /* сброс почти всех стилей */
+  display: inline-block; /* чтобы можно было задать размеры */
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: relative; /* для своих иконок */
+}
+
+/* Если тебе не нужна стрелка через ::after */
+.corpus__contorls .swiper-button-prev::after,
+.corpus__contorls .swiper-button-next::after {
+  content: none; /* убираем стандартные стрелки */
+}
+
+.corpus__contorls .swiper-button-prev,
+.corpus__contorls .swiper-button-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.corpus__contorls .swiper-button-prev:hover,
+.corpus__contorls .swiper-button-next:hover {
+  opacity: 1;
+}
