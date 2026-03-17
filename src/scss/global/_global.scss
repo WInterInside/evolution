@@ -19,6 +19,9 @@ body {
 }
 
 body {
+  //   cursor:
+  //     url("../assets/images/pointer.png") 16 16,
+  //     auto;
   user-select: none;
   text-transform: uppercase;
 
@@ -29,13 +32,19 @@ body {
   font-weight: 400;
   @include mixins.scrollbar();
 
-  background-image: url("../assets/images/grid-bg.svg");
-  background-repeat: repeat;
-  background-size: cover;
-
   &.is-overflow {
     overflow: hidden;
   }
+}
+
+.greed-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  inset: 0;
+  background-image: url("../assets/images/grid-bg.svg");
+  background-repeat: repeat;
+  background-size: cover;
 }
 
 .wrapper {
