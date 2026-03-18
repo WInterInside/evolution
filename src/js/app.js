@@ -205,6 +205,7 @@ const swiper = new Swiper('.swiper', {
 
 const titles = document.querySelectorAll('.swiper-title span');
 const finishImage = document.querySelector('.activation__finish');
+const ticketImage = document.querySelector('.ticket__preview');
 
 function updateUI() {
 	// текст
@@ -218,6 +219,7 @@ function updateUI() {
 
 	if (img) {
 		finishImage.src = img.src;
+		ticketImage.src = img.src;
 	}
 }
 
