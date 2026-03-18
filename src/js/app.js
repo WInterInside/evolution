@@ -1,224 +1,224 @@
 class ProfileDragDrop {
-  constructor({ cardSelector, boardSelector, maxCards = 3 }) {
-    this.cards = document.querySelectorAll(cardSelector);
-    this.board = document.querySelector(boardSelector);
-    this.maxCards = maxCards;
+	constructor({ cardSelector, boardSelector, maxCards = 3 }) {
+		this.cards = document.querySelectorAll(cardSelector);
+		this.board = document.querySelector(boardSelector);
+		this.maxCards = maxCards;
 
-    this.currentCard = null;
-    this.offsetX = 0;
-    this.offsetY = 0;
+		this.currentCard = null;
+		this.offsetX = 0;
+		this.offsetY = 0;
 
-    // Сохраняем плейсхолдеры карточек на доске
-    this.placedPlaceholders = [];
+		// Сохраняем плейсхолдеры карточек на доске
+		this.placedPlaceholders = [];
 
-    this.cards.forEach(card => {
-      card.dataset.initialTransform = getComputedStyle(card).transform;
-      this.attachDragEvents(card);
-    });
-  }
+		this.cards.forEach(card => {
+			card.dataset.initialTransform = getComputedStyle(card).transform;
+			this.attachDragEvents(card);
+		});
+	}
 
-  attachDragEvents = card => {
-    const startDrag = (x, y) => {
-      this.currentCard = card;
+	attachDragEvents = card => {
+		const startDrag = (x, y) => {
+			this.currentCard = card;
 
-      const rect = card.getBoundingClientRect();
-      this.offsetX = x - rect.left;
-      this.offsetY = y - rect.top;
+			const rect = card.getBoundingClientRect();
+			this.offsetX = x - rect.left;
+			this.offsetY = y - rect.top;
 
-      // создаём временный плейсхолдер только если его нет
-      if (!card._placeholder && !card._placeholderSaved) {
-        const placeholder = document.createElement('div');
-        const style = getComputedStyle(card);
-        placeholder.style.width = style.width;
-        placeholder.style.height = style.height;
-        placeholder.style.visibility = 'hidden';
-        placeholder.className = 'profile__card-placeholder';
-        card.parentNode.insertBefore(placeholder, card);
-        card._placeholder = placeholder;
-      }
+			// создаём временный плейсхолдер только если его нет
+			if (!card._placeholder && !card._placeholderSaved) {
+				const placeholder = document.createElement('div');
+				const style = getComputedStyle(card);
+				placeholder.style.width = style.width;
+				placeholder.style.height = style.height;
+				placeholder.style.visibility = 'hidden';
+				placeholder.className = 'profile__card-placeholder';
+				card.parentNode.insertBefore(placeholder, card);
+				card._placeholder = placeholder;
+			}
 
-      // фиксируем позицию без transform, чтобы не было смещения
-      Object.assign(card.style, {
-        position: 'fixed',
-        left: `${rect.left}px`,
-        top: `${rect.top}px`,
-        transform: 'none',
-        zIndex: 1000
-      });
+			// фиксируем позицию без transform, чтобы не было смещения
+			Object.assign(card.style, {
+				position: 'fixed',
+				left: `${rect.left}px`,
+				top: `${rect.top}px`,
+				transform: 'none',
+				zIndex: 1000
+			});
 
-      card.classList.add('dragging');
-      card._startPos = { x, y };
-    };
+			card.classList.add('dragging');
+			card._startPos = { x, y };
+		};
 
-    // мышь
-    card.addEventListener('mousedown', e => {
-      startDrag(e.clientX, e.clientY);
-      ['mousemove', 'mouseup'].forEach(evt =>
-        document.addEventListener(evt, this[evt])
-      );
-    });
+		// мышь
+		card.addEventListener('mousedown', e => {
+			startDrag(e.clientX, e.clientY);
+			['mousemove', 'mouseup'].forEach(evt =>
+				document.addEventListener(evt, this[evt])
+			);
+		});
 
-    // тач
-    card.addEventListener('touchstart', e => {
-      const { clientX, clientY } = e.touches[0];
-      startDrag(clientX, clientY);
-      ['touchmove', 'touchend'].forEach(evt =>
-        document.addEventListener(evt, this[evt], {
-          passive: evt === 'touchmove' ? false : true
-        })
-      );
-    });
-  };
+		// тач
+		card.addEventListener('touchstart', e => {
+			const { clientX, clientY } = e.touches[0];
+			startDrag(clientX, clientY);
+			['touchmove', 'touchend'].forEach(evt =>
+				document.addEventListener(evt, this[evt], {
+				passive: evt === 'touchmove' ? false : true
+				})
+			);
+		});
+	};
 
-  dragTo = (x, y) => {
-    if (!this.currentCard) return;
-    Object.assign(this.currentCard.style, {
-      position: 'fixed',
-      left: `${x - this.offsetX}px`,
-      top: `${y - this.offsetY}px`,
-      transform: 'none'
-    });
-  };
+	dragTo = (x, y) => {
+		if (!this.currentCard) return;
+		Object.assign(this.currentCard.style, {
+			position: 'fixed',
+			left: `${x - this.offsetX}px`,
+			top: `${y - this.offsetY}px`,
+			transform: 'none'
+		});
+	};
 
-  mousemove = e => this.dragTo(e.clientX, e.clientY);
-  touchmove = e => {
-    if (!this.currentCard) return;
-    e.preventDefault();
-    this.dragTo(e.touches[0].clientX, e.touches[0].clientY);
-  };
+	mousemove = e => this.dragTo(e.clientX, e.clientY);
+	touchmove = e => {
+		if (!this.currentCard) return;
+		e.preventDefault();
+		this.dragTo(e.touches[0].clientX, e.touches[0].clientY);
+	};
 
-  mouseup = e => {
-    this.dropCard(e.clientX, e.clientY);
-    this.removeListeners();
-  };
-  touchend = e => {
-    this.dropCard(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-    this.removeListeners();
-  };
+	mouseup = e => {
+		this.dropCard(e.clientX, e.clientY);
+		this.removeListeners();
+	};
+	touchend = e => {
+		this.dropCard(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+		this.removeListeners();
+	};
 
-  dropCard = (x, y) => {
-    if (!this.currentCard) return;
+	dropCard = (x, y) => {
+		if (!this.currentCard) return;
 
-    const { left, top, right, bottom } = this.board.getBoundingClientRect();
-    const isInside = x > left && x < right && y > top && y < bottom;
+		const { left, top, right, bottom } = this.board.getBoundingClientRect();
+		const isInside = x > left && x < right && y > top && y < bottom;
 
-    const placedCards = this.board.querySelectorAll('.profile__card');
-    const stateImages = this.board.querySelectorAll('.profile__state-img');
+		const placedCards = this.board.querySelectorAll('.profile__card');
+		const stateImages = this.board.querySelectorAll('.profile__state-img');
 
-    const dx = Math.abs(x - this.currentCard._startPos.x);
-    const dy = Math.abs(y - this.currentCard._startPos.y);
-    const moved = dx > 3 || dy > 3;
+		const dx = Math.abs(x - this.currentCard._startPos.x);
+		const dy = Math.abs(y - this.currentCard._startPos.y);
+		const moved = dx > 3 || dy > 3;
 
-    const tempPlaceholder = this.currentCard._placeholder;
-    const savedPlaceholder = this.currentCard._placeholderSaved;
+		const tempPlaceholder = this.currentCard._placeholder;
+		const savedPlaceholder = this.currentCard._placeholderSaved;
 
-    if (isInside && placedCards.length < this.maxCards && moved) {
-      // Переносим на доску
-      this.board.appendChild(this.currentCard);
-      Object.assign(this.currentCard.style, {
-        position: 'absolute',
-        left: `${x - left - this.offsetX}px`,
-        top: `${y - top - this.offsetY}px`,
-        transform: this.getRotateFromMatrix(this.currentCard.dataset.initialTransform),
-        zIndex: ''
-      });
-	  
-	this.currentCard.classList.add('is-active');
+		if (isInside && placedCards.length < this.maxCards && moved) {
+		// Переносим на доску
+		this.board.appendChild(this.currentCard);
+		Object.assign(this.currentCard.style, {
+			position: 'absolute',
+			left: `${x - left - this.offsetX}px`,
+			top: `${y - top - this.offsetY}px`,
+			transform: this.getRotateFromMatrix(this.currentCard.dataset.initialTransform),
+			zIndex: ''
+		});
 
-      // Сохраняем временный плейсхолдер как плейсхолдер доски
-      if (tempPlaceholder) {
-        this.placedPlaceholders.push(tempPlaceholder);
-        this.currentCard._placeholderSaved = tempPlaceholder;
-        tempPlaceholder.style.visibility = 'hidden';
-        this.currentCard._placeholder = null;
-      }
+		this.currentCard.classList.add('is-active');
 
-      const nextInactive = Array.from(stateImages).find(
-        img => !img.classList.contains('is-active')
-      );
-      nextInactive && nextInactive.classList.add('is-active');
-    } else {
-      // Возвращаем на место
-      const placeholder = tempPlaceholder || savedPlaceholder;
-      if (placeholder) {
-        placeholder.parentNode.insertBefore(this.currentCard, placeholder);
-        if (tempPlaceholder) {
-          tempPlaceholder.parentNode.removeChild(tempPlaceholder);
-          this.currentCard._placeholder = null;
-        }
-      }
+		// Сохраняем временный плейсхолдер как плейсхолдер доски
+		if (tempPlaceholder) {
+			this.placedPlaceholders.push(tempPlaceholder);
+			this.currentCard._placeholderSaved = tempPlaceholder;
+			tempPlaceholder.style.visibility = 'hidden';
+			this.currentCard._placeholder = null;
+		}
 
-      Object.assign(this.currentCard.style, {
-        position: '',
-        left: '',
-        top: '',
-        transform: this.currentCard.dataset.initialTransform,
-        zIndex: ''
-      });
-    }
+		const nextInactive = Array.from(stateImages).find(
+			img => !img.classList.contains('is-active')
+		);
+		nextInactive && nextInactive.classList.add('is-active');
+		} else {
+		// Возвращаем на место
+		const placeholder = tempPlaceholder || savedPlaceholder;
+		if (placeholder) {
+			placeholder.parentNode.insertBefore(this.currentCard, placeholder);
+			if (tempPlaceholder) {
+				tempPlaceholder.parentNode.removeChild(tempPlaceholder);
+				this.currentCard._placeholder = null;
+			}
+		}
 
-    this.currentCard.classList.remove('dragging');
-    this.currentCard = null;
-  };
+		Object.assign(this.currentCard.style, {
+			position: '',
+			left: '',
+			top: '',
+			transform: this.currentCard.dataset.initialTransform,
+			zIndex: ''
+		});
+		}
 
-  removeListeners = () =>
-    ['mousemove', 'mouseup', 'touchmove', 'touchend'].forEach(evt =>
-      document.removeEventListener(evt, this[evt])
-    );
+		this.currentCard.classList.remove('dragging');
+		this.currentCard = null;
+	};
 
-  getRotateFromMatrix = matrix => {
-    if (!matrix || matrix === 'none') return 'none';
-    const values = matrix.match(/matrix\(([^)]+)\)/)?.[1]?.split(',') || [];
-    const [a = 1, b = 0] = values.map(parseFloat);
-    return `rotate(${Math.round(Math.atan2(b, a) * (180 / Math.PI))}deg)`;
-  };
+	removeListeners = () =>
+		['mousemove', 'mouseup', 'touchmove', 'touchend'].forEach(evt =>
+			document.removeEventListener(evt, this[evt])
+		);
+
+	getRotateFromMatrix = matrix => {
+		if (!matrix || matrix === 'none') return 'none';
+		const values = matrix.match(/matrix\(([^)]+)\)/)?.[1]?.split(',') || [];
+		const [a = 1, b = 0] = values.map(parseFloat);
+		return `rotate(${Math.round(Math.atan2(b, a) * (180 / Math.PI))}deg)`;
+	};
 }
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', () =>
-  new ProfileDragDrop({
-    cardSelector: '.profile__card',
-    boardSelector: '.profile__state',
-    maxCards: 3
-  })
+	new ProfileDragDrop({
+		cardSelector: '.profile__card',
+		boardSelector: '.profile__state',
+		maxCards: 3
+	})
 );
 
 const swiper = new Swiper('.swiper', {
-  slidesPerView: 3,
-  centeredSlides: true,
-  loop: false,
-  spaceBetween: 0,
-  initialSlide: 2,
-  effect: 'coverflow',
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 300,
-    modifier: 2,
-    slideShadows: false
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
+	slidesPerView: 3,
+	centeredSlides: true,
+	loop: false,
+	spaceBetween: 0,
+	initialSlide: 2,
+	effect: 'coverflow',
+	coverflowEffect: {
+		rotate: 0,
+		stretch: 0,
+		depth: 300,
+		modifier: 2,
+		slideShadows: false
+	},
+	navigation: {
+		nextEl: '.swiper-button-next',
+		prevEl: '.swiper-button-prev',
+	},
 });
 
 const titles = document.querySelectorAll('.swiper-title span');
 const finishImage = document.querySelector('.activation__finish');
 
 function updateUI() {
-  // текст
-  titles.forEach((el, i) => {
-    el.style.display = i === swiper.realIndex ? 'inline' : 'none';
-  });
+	// текст
+	titles.forEach((el, i) => {
+		el.style.display = i === swiper.realIndex ? 'inline' : 'none';
+	});
 
-  // активный слайд через swiper
-  const activeSlide = swiper.slides[swiper.activeIndex];
-  const img = activeSlide.querySelector('img');
+	// активный слайд через swiper
+	const activeSlide = swiper.slides[swiper.activeIndex];
+	const img = activeSlide.querySelector('img');
 
-  if (img) {
-    finishImage.src = img.src;
-  }
+	if (img) {
+		finishImage.src = img.src;
+	}
 }
 
 // старт
@@ -228,203 +228,223 @@ updateUI();
 swiper.on('slideChangeTransitionEnd', updateUI);
 
 class MazeGame {
-  constructor(canvasId, imgSrc, start, finish) {
-    this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext("2d");
+constructor(canvasId, imgSrc, start, finish) {
+	this.canvas = document.getElementById(canvasId);
+	this.ctx = this.canvas.getContext("2d");
 
-    // UI элемент
-    this.startEl = document.querySelector(".activation__start");
+	// UI элемент
+	this.startEl = document.querySelector(".activation__start");
 
-    // скрытый канвас для коллизий
-    this.collisionCanvas = document.createElement("canvas");
-    this.collisionCtx = this.collisionCanvas.getContext("2d");
+	// скрытый канвас для коллизий
+	this.collisionCanvas = document.createElement("canvas");
+	this.collisionCtx = this.collisionCanvas.getContext("2d");
+	this.body = document.body;
+	this.img = new Image();
+	this.img.src = imgSrc;
 
-    this.img = new Image();
-    this.img.src = imgSrc;
+	this.START = start;
+	this.FINISH = finish;
 
-    this.START = start;
-    this.FINISH = finish;
+	this.playing = false;
+	this.playerRadius = 11;
 
-    this.playing = false;
-    this.playerRadius = 11;
+	this.playerX = this.START.x;
+	this.playerY = this.START.y;
 
-    this.playerX = this.START.x;
-    this.playerY = this.START.y;
+	this.img.onload = () => {
+		this.canvas.width = this.img.width;
+		this.canvas.height = this.img.height;
 
-    this.img.onload = () => {
-      this.canvas.width = this.img.width;
-      this.canvas.height = this.img.height;
+		this.collisionCanvas.width = this.img.width;
+		this.collisionCanvas.height = this.img.height;
+		this.collisionCtx.drawImage(this.img, 0, 0);
 
-      this.collisionCanvas.width = this.img.width;
-      this.collisionCanvas.height = this.img.height;
-      this.collisionCtx.drawImage(this.img, 0, 0);
+		this.draw();
+	};
 
-      this.draw();
-    };
+	this.initEvents();
+}
 
-    this.initEvents();
-  }
+initEvents() {
+	// мышь
+	this.canvas.addEventListener("mousedown", e => this.startGame(this.getCoords(e)));
+	this.canvas.addEventListener("mousemove", e => this.move(this.getCoords(e)));
+	this.canvas.addEventListener("mouseup", () => this.resetPlayer());
+	this.canvas.addEventListener("mouseleave", () => {
+		if (this.playing) this.lose();
+	});
 
-  initEvents() {
-    // мышь
-    this.canvas.addEventListener("mousedown", e => this.startGame(this.getCoords(e)));
-    this.canvas.addEventListener("mousemove", e => this.move(this.getCoords(e)));
-    this.canvas.addEventListener("mouseup", () => this.resetPlayer());
-    this.canvas.addEventListener("mouseleave", () => {
-      if (this.playing) this.lose();
-    });
+	// тач
+	this.canvas.addEventListener("touchstart", e =>
+		this.startGame(this.getCoords(e.touches[0]))
+	);
 
-    // тач
-    this.canvas.addEventListener("touchstart", e =>
-      this.startGame(this.getCoords(e.touches[0]))
-    );
+	this.canvas.addEventListener("touchmove", e => {
+		e.preventDefault();
+		this.move(this.getCoords(e.touches[0]));
+	});
 
-    this.canvas.addEventListener("touchmove", e => {
-      e.preventDefault();
-      this.move(this.getCoords(e.touches[0]));
-    });
+	this.canvas.addEventListener("touchend", () => this.resetPlayer());
 
-    this.canvas.addEventListener("touchend", () => this.resetPlayer());
+	window.addEventListener("resize", () => this.draw());
+}
 
-    window.addEventListener("resize", () => this.draw());
-  }
+getCoords(e) {
+	const rect = this.canvas.getBoundingClientRect();
+	const scaleX = this.canvas.width / rect.width;
+	const scaleY = this.canvas.height / rect.height;
 
-  getCoords(e) {
-    const rect = this.canvas.getBoundingClientRect();
-    const scaleX = this.canvas.width / rect.width;
-    const scaleY = this.canvas.height / rect.height;
+	return {
+		x: Math.floor((e.clientX - rect.left) * scaleX),
+		y: Math.floor((e.clientY - rect.top) * scaleY)
+	};
+}
 
-    return {
-      x: Math.floor((e.clientX - rect.left) * scaleX),
-      y: Math.floor((e.clientY - rect.top) * scaleY)
-    };
-  }
+inCircle(x, y, circle) {
+	const dx = x - circle.x;
+	const dy = y - circle.y;
+	return dx * dx + dy * dy <= circle.r * circle.r;
+}
 
-  inCircle(x, y, circle) {
-    const dx = x - circle.x;
-    const dy = y - circle.y;
-    return dx * dx + dy * dy <= circle.r * circle.r;
-  }
+// проверка финишной линии
+isOnFinishLine(x, y) {
+	const { x1, y1, x2, y2 } = this.FINISH;
 
-  // проверка финишной линии
-  isOnFinishLine(x, y) {
-    const { x1, y1, x2, y2 } = this.FINISH;
+	const A = x - x1;
+	const B = y - y1;
+	const C = x2 - x1;
+	const D = y2 - y1;
 
-    const A = x - x1;
-    const B = y - y1;
-    const C = x2 - x1;
-    const D = y2 - y1;
+	const dot = A * C + B * D;
+	const lenSq = C * C + D * D;
+	let param = dot / lenSq;
 
-    const dot = A * C + B * D;
-    const lenSq = C * C + D * D;
-    let param = dot / lenSq;
+	if (param < 0) param = 0;
+	else if (param > 1) param = 1;
 
-    if (param < 0) param = 0;
-    else if (param > 1) param = 1;
+	const closestX = x1 + param * C;
+	const closestY = y1 + param * D;
 
-    const closestX = x1 + param * C;
-    const closestY = y1 + param * D;
+	const dx = x - closestX;
+	const dy = y - closestY;
 
-    const dx = x - closestX;
-    const dy = y - closestY;
+	const distance = Math.sqrt(dx * dx + dy * dy);
 
-    const distance = Math.sqrt(dx * dx + dy * dy);
+	return distance <= this.playerRadius + 2;
+}
 
-    return distance <= this.playerRadius + 2;
-  }
+checkCollision(x, y) {
+	if (x < 0 || x >= this.canvas.width || y < 0 || y >= this.canvas.height) {
+		return true;
+	}
 
-  checkCollision(x, y) {
-    if (x < 0 || x >= this.canvas.width || y < 0 || y >= this.canvas.height) {
-      return true;
-    }
+	const [r, g, b] = this.collisionCtx.getImageData(x, y, 1, 1).data;
+	return r < 40 && g < 40 && b < 40;
+}
 
-    const [r, g, b] = this.collisionCtx.getImageData(x, y, 1, 1).data;
-    return r < 40 && g < 40 && b < 40;
-  }
+startGame({ x, y }) {
+	if (this.inCircle(x, y, this.START)) {
+		this.playing = true;
 
-  startGame({ x, y }) {
-    if (this.inCircle(x, y, this.START)) {
-      this.playing = true;
+		if (this.startEl) {
+			this.startEl.classList.add("is-active");
+		}
+	}
+}
 
-      if (this.startEl) {
-        this.startEl.classList.add("is-active");
-      }
-    }
-  }
+move({ x, y }) {
+	if (!this.playing) return;
 
-  move({ x, y }) {
-    if (!this.playing) return;
+	if (this.checkCollision(x, y)) {
+		this.lose();
+		return;
+	}
 
-    if (this.checkCollision(x, y)) {
-      this.lose();
-      return;
-    }
+	this.playerX = x;
+	this.playerY = y;
 
-    this.playerX = x;
-    this.playerY = y;
+	if (this.isOnFinishLine(x, y)) {
+		this.win();
+		return;
+	}
 
-    if (this.isOnFinishLine(x, y)) {
-      this.win();
-      return;
-    }
+	this.draw();
+}
 
-    this.draw();
-  }
+draw() {
+	const { ctx, canvas } = this;
 
-  draw() {
-    const { ctx, canvas } = this;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(this.img, 0, 0);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(this.img, 0, 0);
+	// старт (невидимый)
+	ctx.beginPath();
+	ctx.arc(this.START.x, this.START.y, this.START.r, 0, Math.PI * 2);
+	ctx.fillStyle = "transparent";
+	ctx.fill();
 
-    // старт (невидимый)
-    ctx.beginPath();
-    ctx.arc(this.START.x, this.START.y, this.START.r, 0, Math.PI * 2);
-    ctx.fillStyle = "transparent";
-    ctx.fill();
+	// финиш (невидимая линия)
+	ctx.beginPath();
+	ctx.moveTo(this.FINISH.x1, this.FINISH.y1);
+	ctx.lineTo(this.FINISH.x2, this.FINISH.y2);
+	ctx.strokeStyle = "transparent";
+	ctx.lineWidth = 6;
+	ctx.stroke();
 
-    // финиш (невидимая линия)
-    ctx.beginPath();
-    ctx.moveTo(this.FINISH.x1, this.FINISH.y1);
-    ctx.lineTo(this.FINISH.x2, this.FINISH.y2);
-    ctx.strokeStyle = "transparent";
-    ctx.lineWidth = 6;
-    ctx.stroke();
+	// игрок
+	ctx.beginPath();
+	ctx.arc(this.playerX, this.playerY, this.playerRadius, 0, Math.PI * 2);
+	ctx.fillStyle = "#EB631C";
+	ctx.fill();
+}
 
-    // игрок
-    ctx.beginPath();
-    ctx.arc(this.playerX, this.playerY, this.playerRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#EB631C";
-    ctx.fill();
-  }
+resetPlayer() {
+	this.playing = false;
+	this.playerX = this.START.x;
+	this.playerY = this.START.y;
 
-  resetPlayer() {
-    this.playing = false;
-    this.playerX = this.START.x;
-    this.playerY = this.START.y;
+	if (this.startEl) {
+		this.startEl.classList.remove("is-active");
+	}
 
-    if (this.startEl) {
-      this.startEl.classList.remove("is-active");
-    }
+	this.draw();
+}
 
-    this.draw();
-  }
+	lose() {
+		this.body.classList.remove('is-success');
+		this.body.classList.add('is-error');
 
-  lose() {
-    alert("Проигрыш 😢");
-    this.resetPlayer();
-  }
+		this.resetPlayer();
+	}
 
-  win() {
-    alert("Победа 🎉");
-    this.resetPlayer();
-  }
+	win() {
+		this.body.classList.remove('is-error');
+		this.body.classList.add('is-success');
+
+		this.resetPlayer();
+	}
 }
 
 // запуск
 const game = new MazeGame(
-  "mazeCanvas",
-  "assets/images/maze.png",
-  { x: 144, y: 90, r: 40 },
-  { x1: 1310, y1: 400, x2: 1310, y2: 355 }
+	"mazeCanvas",
+	"assets/images/maze.png",
+	{ x: 144, y: 90, r: 40 },
+	{ x1: 1310, y1: 400, x2: 1310, y2: 355 }
 );
+
+const resetBtn = document.querySelector('.error-reset');
+
+if (resetBtn) {
+	resetBtn.addEventListener('click', () => {
+		document.body.classList.remove('is-error');
+	});
+}
+
+const activeBtn = document.querySelector('.activation__button');
+
+if (activeBtn) {
+  activeBtn.addEventListener('click', () => {
+    document.body.classList.add('is-activated');
+  });
+}

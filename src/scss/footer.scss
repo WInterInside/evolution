@@ -3,7 +3,9 @@
 
 .footer {
   position: relative;
-
+  height: 154px;
+  display: flex;
+  align-items: center;
   & .footer__bg {
     position: absolute;
     width: 100%;

@@ -35,6 +35,14 @@ body {
   &.is-overflow {
     overflow: hidden;
   }
+
+  &.is-error {
+    overflow: hidden;
+    & .error-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }
 
 .bottom-gradient {
@@ -64,6 +72,37 @@ body {
   background-image: url("../assets/images/grid-bg.svg");
   background-repeat: repeat;
   background-size: cover;
+}
+
+.error-overlay {
+  position: absolute;
+  z-index: 1000;
+  background-color: #ff878799;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  & span {
+    font-size: 90px;
+    font-weight: bold;
+    -webkit-text-stroke: 1px black;
+  }
+
+  & button {
+    margin-top: 20px;
+    font-size: 40px;
+    padding: 10px 40px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+  }
 }
 
 .wrapper {

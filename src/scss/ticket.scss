@@ -1,0 +1,74 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
+.ticket {
+  transform: rotate(270deg) translateX(-100vh);
+  max-width: 860px;
+  position: fixed;
+  bottom: 0;
+  right: -220px;
+  display: flex;
+  gap: 20px;
+  border: 2px solid #000;
+  border-radius: 80px 0px 0 80px;
+  background-color: #d8dacb;
+  z-index: 1001;
+  overflow: hidden;
+  transition: transform 0.3s;
+
+  &__footer {
+    width: 20%;
+    position: relative;
+    background: linear-gradient(270deg, #d8dacb 30.88%, #01fe48 100%);
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      border-right: 1px dashed #000;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+    width: 100%;
+    position: relative;
+  }
+
+  &__label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    font-weight: 700;
+  }
+
+  &__data {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 94px;
+    font-size: 12px;
+  }
+
+  &__img {
+    margin: 0 auto;
+  }
+
+  &__warning {
+    font-size: 12px;
+    margin-top: 94px;
+    text-align: center;
+    padding: 12px 16px;
+    border: 1px solid #000;
+  }
+}
+
+body.is-activated {
+  .ticket {
+    transform: rotate(270deg) translateX(270px);
+  }
+}
