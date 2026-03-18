@@ -76,6 +76,16 @@
     color: #fff;
     width: 294px;
     height: 137px;
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s;
+
+    &.is-active {
+      background-color: #01fe48;
+      color: #000;
+      border-color: #01fe48;
+    }
 
     // transition: transform 0.3s;
 

@@ -122,6 +122,8 @@ class ProfileDragDrop {
         transform: this.getRotateFromMatrix(this.currentCard.dataset.initialTransform),
         zIndex: ''
       });
+	  
+	this.currentCard.classList.add('is-active');
 
       // Сохраняем временный плейсхолдер как плейсхолдер доски
       if (tempPlaceholder) {
@@ -186,7 +188,7 @@ const swiper = new Swiper('.swiper', {
   centeredSlides: true,
   loop: false,
   spaceBetween: 0,
-  initialSlide: 2, // 3-й слайд активный
+  initialSlide: 2,
   effect: 'coverflow',
   coverflowEffect: {
     rotate: 0,
@@ -201,21 +203,29 @@ const swiper = new Swiper('.swiper', {
   },
 });
 
-// Получаем все span с текстом
 const titles = document.querySelectorAll('.swiper-title span');
+const finishImage = document.querySelector('.activation__finish');
 
-// Функция для показа только соответствующего текста
-function updateTitle() {
+function updateUI() {
+  // текст
   titles.forEach((el, i) => {
     el.style.display = i === swiper.realIndex ? 'inline' : 'none';
   });
+
+  // активный слайд через swiper
+  const activeSlide = swiper.slides[swiper.activeIndex];
+  const img = activeSlide.querySelector('img');
+
+  if (img) {
+    finishImage.src = img.src;
+  }
 }
 
-// Показываем правильный текст при инициализации
-updateTitle();
+// старт
+updateUI();
 
-// Меняем текст при смене слайда
-swiper.on('slideChange', updateTitle);
+// ВАЖНО: после завершения анимации
+swiper.on('slideChangeTransitionEnd', updateUI);
 
 class MazeGame {
   constructor(canvasId, imgSrc, start, finish) {
