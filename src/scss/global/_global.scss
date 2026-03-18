@@ -37,6 +37,25 @@ body {
   }
 }
 
+.bottom-gradient {
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
+  width: 100vw;
+  height: 500px;
+  background: linear-gradient(180deg, #d8dacb 0%, #ec5a0f 100%);
+}
+
+.top-gradient {
+  position: absolute;
+  transform: rotate(180deg);
+  pointer-events: none;
+  bottom: 0;
+  width: 100vw;
+  height: 154px;
+  background: linear-gradient(180deg, #d8dacb 0%, #ec5a0f 100%);
+}
+
 .greed-overlay {
   position: absolute;
   pointer-events: none;
