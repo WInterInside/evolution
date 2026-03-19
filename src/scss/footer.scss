@@ -6,6 +6,7 @@
   height: 154px;
   display: flex;
   align-items: center;
+
   & .footer__bg {
     position: absolute;
     width: 100%;
@@ -31,19 +32,22 @@
   }
 }
 
-@media #{vars.$xsmall} {
+.top-gradient {
+  position: absolute;
+  transform: rotate(180deg);
+  pointer-events: none;
+  bottom: 0;
+  width: 100vw;
+  height: 100%;
+  background: linear-gradient(180deg, #d8dacb 0%, #ec5a0f 100%);
+}
+
+@media #{vars.$medium} {
   .footer {
-    & span {
-      font-size: 16px;
-    }
-
+    height: 255px;
     &__wrapper {
-      font-size: 18px;
-      gap: 16px;
-    }
-
-    &__year {
-      display: none;
+      flex-direction: column;
+      gap: 32px;
     }
   }
 }
