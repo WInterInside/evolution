@@ -76,6 +76,13 @@
 
   &__features-caption {
     font-weight: 700;
+    padding-left: 38px;
+    position: relative;
+  }
+
+  &__features-number {
+    position: absolute;
+    left: 0;
   }
 
   &__features-text {
@@ -180,14 +187,17 @@
     }
 
     &__features-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      max-width: 360px;
-
       &:last-child {
         margin-left: 0;
       }
+    }
+
+    &__features-text {
+      padding-left: 20px;
+    }
+
+    &__features-caption {
+      padding-left: 20px;
     }
 
     &__dot {
