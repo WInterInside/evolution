@@ -37,6 +37,7 @@
     border-radius: 40px;
     border: 1px solid #000;
     top: -100px;
+    font-weight: 700;
   }
 
   &__text-decor {
@@ -161,13 +162,54 @@
 }
 
 @keyframes heightBounceCorpus {
+  /* исходное */
   0% {
+    width: 100%;
     height: 400px;
   }
-  50% {
-    height: 50px;
+
+  /* плавное сжатие */
+  35% {
+    width: 20%;
+    height: 80px; /* 400 * 0.2 */
   }
+
+  /* минимум */
+  45% {
+    width: 10%;
+    height: 40px; /* 400 * 0.1 */
+  }
+
+  /* ОТСКОК */
+  52% {
+    width: 18%;
+    height: 72px;
+  }
+
+  58% {
+    width: 11%;
+    height: 44px;
+  }
+
+  64% {
+    width: 14%;
+    height: 56px;
+  }
+
+  70% {
+    width: 10%;
+    height: 40px;
+  }
+
+  /* пауза */
+  80% {
+    width: 10%;
+    height: 40px;
+  }
+
+  /* раскрытие */
   100% {
+    width: 100%;
     height: 400px;
   }
 }
@@ -180,6 +222,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.swiper-wrapper {
+  cursor: pointer;
+}
+
+.swiper-wrapper:hover {
+  .swiper-slide-active .corpus__tooltip {
+    opacity: 1;
+  }
 }
 
 .swiper-slide img {
@@ -195,10 +247,6 @@
 }
 
 .swiper-title span[style*="inline"] {
-  opacity: 1;
-}
-
-.swiper-slide-active .corpus__tooltip {
   opacity: 1;
 }
 

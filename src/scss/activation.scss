@@ -9,13 +9,14 @@
 
   &__figure {
     position: absolute;
-    top: -30px;
-    left: 0;
+    top: 50%;
+    left: 50%;
     border: 2px solid #000;
     width: 100%;
     height: 260px;
     border-radius: 50%;
-    animation: heightBounceActivation 3s ease-in-out infinite;
+    transform: translate(-50%, -50%);
+    animation: figureResize 2.6s infinite;
   }
 
   &__content {
@@ -31,6 +32,7 @@
     border-radius: 40px;
     border: 1px solid #000;
     top: -100px;
+    font-weight: 700;
   }
 
   &__text-decor {
@@ -174,15 +176,56 @@
   }
 }
 
-@keyframes heightBounceActivation {
+@keyframes figureResize {
+  /* исходное */
   0% {
-    height: 270px;
+    width: 100%;
+    height: 260px;
   }
-  50% {
-    height: 50px;
+
+  /* плавное сжатие */
+  35% {
+    width: 20%;
+    height: 52px;
   }
+
+  /* минимум */
+  45% {
+    width: 10%;
+    height: 26px;
+  }
+
+  /* ОТСКОК */
+  52% {
+    width: 18%;
+    height: 46px;
+  }
+
+  58% {
+    width: 11%;
+    height: 30px;
+  }
+
+  64% {
+    width: 14%;
+    height: 36px;
+  }
+
+  70% {
+    width: 10%;
+    height: 26px;
+  }
+
+  /* пауза */
+  80% {
+    width: 10%;
+    height: 26px;
+  }
+
+  /* раскрытие */
   100% {
-    height: 270px;
+    width: 100%;
+    height: 260px;
   }
 }
 

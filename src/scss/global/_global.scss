@@ -45,6 +45,12 @@ body {
   }
 }
 
+@media #{vars.$small} {
+  body {
+    font-size: 14px;
+  }
+}
+
 .bottom-gradient {
   position: absolute;
   pointer-events: none;
@@ -75,7 +81,7 @@ body {
 }
 
 .error-overlay {
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   background-color: #ff878799;
   inset: 0;

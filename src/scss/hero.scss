@@ -9,12 +9,12 @@
   &__figure {
     position: absolute;
     top: 136px;
-    left: 0;
+    left: 40px;
     border: 2px solid #000;
-    width: 100%;
-    height: 713px;
+    width: calc(100% - 80px);
+    height: 76px;
     border-radius: 50%;
-    animation: heightBounceHero 3s ease-in-out infinite;
+    animation: figureStretch 3s infinite;
   }
 
   &__content {
@@ -30,6 +30,7 @@
     border-radius: 40px;
     border: 1px solid #000;
     top: 50%;
+    font-weight: 700;
 
     &--left {
       left: 15%;
@@ -55,14 +56,39 @@
   }
 }
 
-@keyframes heightBounceHero {
+@keyframes figureStretch {
   0% {
+    height: 76px;
+  }
+  40% {
     height: 713px;
   }
-  50% {
-    height: 50px;
+  45% {
+    height: 713px;
   }
+  55% {
+    height: 40px;
+  }
+  60% {
+    height: 140px;
+  }
+  65% {
+    height: 55px;
+  }
+  70% {
+    height: 110px;
+  }
+  75% {
+    height: 65px;
+  }
+  80% {
+    height: 90px;
+  }
+  90% {
+    height: 76px;
+  }
+
   100% {
-    height: 713px;
+    height: 76px;
   }
 }
