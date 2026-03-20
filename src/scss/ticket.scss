@@ -2,15 +2,16 @@
 @use "base/variables" as vars;
 
 .ticket {
-  transform: rotate(270deg) translateX(-100vh);
-  width: 860px;
+  transform: translateY(100vh);
   position: fixed;
-  bottom: 0;
-  right: -220px;
+  height: 88vh;
+  bottom: 20px;
+  right: 20px;
   display: flex;
+  flex-direction: column-reverse;
   gap: 20px;
   border: 2px solid #000;
-  border-radius: 80px 0px 0 80px;
+  border-radius: 0 0 80px 80px;
   background-color: #d8dacb;
   z-index: 1001;
   overflow: hidden;
@@ -18,71 +19,60 @@
 
   &__preview {
     position: absolute;
-    top: 0;
+    top: calc(50% - 150px);
     left: 0;
-    height: 400px;
-    width: 600px;
+    height: 300px;
+    transform: rotate(90deg);
     object-fit: cover;
   }
 
   &__footer {
-    width: 20%;
+    display: flex;
+    height: 168px;
     position: relative;
-    background: linear-gradient(270deg, #d8dacb 30.88%, #01fe48 100%);
+    background: linear-gradient(180deg, #d8dacb 30.88%, #01fe48 100%);
 
     &::before {
       content: "";
       position: absolute;
-      right: 0;
-      top: 0;
-      width: 1px;
+      left: 0;
+      top: 1px;
+      width: 100%;
       height: 100%;
-      border-right: 1px dashed #000;
+      z-index: 999;
+      border-top: 1px dashed #000;
     }
   }
 
   &__content {
     padding: 20px;
-    width: 100%;
-    position: relative;
-  }
-
-  &__label {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    font-weight: 700;
-  }
-
-  &__data {
+    width: 400px;
+    height: 700px;
     display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 94px;
-    font-size: 12px;
-  }
+    position: relative;
 
-  &__img {
-    margin: 0 auto;
-  }
-
-  &__warning {
-    font-size: 12px;
-    margin-top: 94px;
-    text-align: center;
-    padding: 12px 16px;
-    border: 1px solid #000;
+    & img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 }
 
 @media #{vars.$xsmall} {
   .ticket {
+    // width: 100%;
+    // right: 0;
+    // bottom: auto;
+    // top: 0;
+    // height: 90vh;
   }
 }
 
 body.is-activated {
   .ticket {
-    transform: rotate(270deg) translateX(270px);
+    transform: translateY(0);
   }
 }
