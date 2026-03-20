@@ -234,7 +234,9 @@ function updateUI() {
 updateUI();
 
 // ВАЖНО: после завершения анимации
-swiper.on('slideChangeTransitionEnd', updateUI);
+swiper.on('slideChange', updateUI);
+swiper.on('transitionEnd', updateUI);
+swiper.on('touchEnd', updateUI);
 
 class MazeGame {
 	constructor(canvasId, imgSrc, start, finish) {

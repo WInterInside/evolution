@@ -242,6 +242,12 @@ body.is-success {
     color: #000;
     pointer-events: auto;
     z-index: 999;
+
+    transform: translateY(-10vh);
+
+    @media #{vars.$xsmall} {
+      transform: translateY(-30vh);
+    }
   }
 }
 
@@ -290,7 +296,7 @@ body.is-activated {
 
     &__message {
       & span {
-        font-size: 60px;
+        font-size: 44px;
       }
     }
 
