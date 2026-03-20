@@ -200,8 +200,12 @@ const swiper = new Swiper('.swiper', {
 	},
 
 	breakpoints: {
-		1000: {
+		800: {
 			slidesPerView: 3,
+
+			coverflowEffect: {
+				depth: 400,
+			}
 		}
 	},
 
