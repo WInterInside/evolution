@@ -5,7 +5,6 @@
   position: relative;
   padding: 127px 0 140px 0;
   background-color: #d8dacb;
-  //   background: linear-gradient(180deg, #d8dacb 0%, #ec5a0f 100%);
 
   &__figure {
     position: absolute;
@@ -24,6 +23,12 @@
     display: flex;
     justify-content: center;
     width: 100%;
+  }
+
+  &__text-title {
+    &--m {
+      display: none;
+    }
   }
 
   &__text {
@@ -93,6 +98,10 @@
     pointer-events: auto;
   }
 
+  &__game-wrapper {
+    display: contents;
+  }
+
   canvas {
     width: 100%;
     max-width: 1328px;
@@ -106,15 +115,15 @@
     right: -140px;
     bottom: 50%;
     transform: translateY(70%);
-    // width: 56px;
     height: 172px;
     pointer-events: none;
+    // display: none;
   }
 
   &__start {
     position: absolute;
-    top: 10px;
-    left: 64px;
+    top: 0;
+    left: 0;
     width: 160px;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -177,52 +186,38 @@
 }
 
 @keyframes figureResize {
-  /* исходное */
   0% {
     width: 100%;
     height: 260px;
   }
-
-  /* плавное сжатие */
   35% {
     width: 20%;
     height: 52px;
   }
-
-  /* минимум */
   45% {
     width: 10%;
     height: 26px;
   }
-
-  /* ОТСКОК */
   52% {
     width: 18%;
     height: 46px;
   }
-
   58% {
     width: 11%;
     height: 30px;
   }
-
   64% {
     width: 14%;
     height: 36px;
   }
-
   70% {
     width: 10%;
     height: 26px;
   }
-
-  /* пауза */
   80% {
     width: 10%;
     height: 26px;
   }
-
-  /* раскрытие */
   100% {
     width: 100%;
     height: 260px;
@@ -253,5 +248,76 @@ body.is-success {
 body.is-activated {
   & .activation__button {
     opacity: 0;
+  }
+}
+@media #{vars.$normal} {
+  .activation {
+    &__instruction {
+      margin-top: 30px;
+    }
+  }
+}
+
+@media #{vars.$small} {
+  .activation {
+    &__text-title {
+      &--m {
+        display: block;
+      }
+      &--d {
+        display: none;
+      }
+    }
+
+    &__text-decor {
+      margin-top: 108px;
+      margin-left: auto;
+      margin-right: 20px;
+    }
+
+    &__instruction {
+      margin: 50px 0 50px 0;
+    }
+  }
+}
+
+@media #{vars.$xsmall} {
+  .activation {
+    &__game {
+      max-width: 358px;
+      height: 712px;
+    }
+
+    &__message {
+      & span {
+        font-size: 60px;
+      }
+    }
+
+    &__finish {
+      position: absolute;
+      right: 44px;
+      bottom: -64px;
+      transform: rotate(95deg);
+      height: 172px;
+      pointer-events: none;
+    }
+
+    &__start {
+      top: 4px;
+      left: auto;
+      right: -32px;
+      width: 140px;
+
+      &::before {
+        width: 70px;
+        left: calc(50% - 35px);
+        top: calc(50% - 35px);
+      }
+
+      &.is-active {
+        transform: scale(0);
+      }
+    }
   }
 }

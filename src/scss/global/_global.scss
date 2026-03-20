@@ -19,9 +19,9 @@ body {
 }
 
 body {
-  //   cursor:
-  //     url("../assets/images/pointer.png") 16 16,
-  //     auto;
+  cursor:
+    url("../assets/images/pointer.png") 16 16,
+    auto;
   user-select: none;
   text-transform: uppercase;
 
@@ -90,6 +90,11 @@ body {
     font-size: 90px;
     font-weight: bold;
     -webkit-text-stroke: 1px black;
+    text-align: center;
+
+    @media #{vars.$small} {
+      font-size: 60px;
+    }
   }
 
   & button {
@@ -98,6 +103,11 @@ body {
     padding: 10px 40px;
     border: 1px solid #fff;
     border-radius: 10px;
+    text-align: center;
+
+    @media #{vars.$small} {
+      font-size: 30px;
+    }
   }
 }
 
@@ -176,7 +186,7 @@ button {
   padding: 0;
   border: none;
   user-select: none;
-  cursor: pointer;
+  //   cursor: pointer;
 }
 
 .icon {

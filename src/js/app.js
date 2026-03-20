@@ -184,25 +184,32 @@ document.addEventListener('DOMContentLoaded', () =>
 );
 
 const swiper = new Swiper('.swiper', {
-	slidesPerView: 3,
+	slidesPerView: 2,
 	centeredSlides: true,
 	loop: false,
 	spaceBetween: 0,
 	initialSlide: 2,
 	effect: 'coverflow',
+
 	coverflowEffect: {
 		rotate: 0,
 		stretch: 0,
-		depth: 300,
-		modifier: 2,
+		depth: 500,
+		modifier: 1,
 		slideShadows: false
 	},
+
+	breakpoints: {
+		1000: {
+			slidesPerView: 3,
+		}
+	},
+
 	navigation: {
 		nextEl: '.swiper-button-next',
 		prevEl: '.swiper-button-prev',
 	},
 });
-
 const titles = document.querySelectorAll('.swiper-title span');
 const finishImage = document.querySelector('.activation__finish');
 const ticketImage = document.querySelector('.ticket__preview');
@@ -230,187 +237,211 @@ updateUI();
 swiper.on('slideChangeTransitionEnd', updateUI);
 
 class MazeGame {
-constructor(canvasId, imgSrc, start, finish) {
-	this.canvas = document.getElementById(canvasId);
-	this.ctx = this.canvas.getContext("2d");
+	constructor(canvasId, imgSrc, start, finish) {
+		this.canvas = document.getElementById(canvasId);
+		this.ctx = this.canvas.getContext("2d");
+		const isMobile = window.innerWidth < 767;
+		// UI элемент
+		this.startEl = document.querySelector(".activation__start");
 
-	// UI элемент
-	this.startEl = document.querySelector(".activation__start");
+		// скрытый канвас для коллизий
+		this.collisionCanvas = document.createElement("canvas");
+		this.collisionCtx = this.collisionCanvas.getContext("2d");
+		this.body = document.body;
+		this.img = new Image();
+		this.img.src = imgSrc;
 
-	// скрытый канвас для коллизий
-	this.collisionCanvas = document.createElement("canvas");
-	this.collisionCtx = this.collisionCanvas.getContext("2d");
-	this.body = document.body;
-	this.img = new Image();
-	this.img.src = imgSrc;
+		this.START = start;
+		this.FINISH = finish;
 
-	this.START = start;
-	this.FINISH = finish;
+		this.playing = false;
+		this.playerRadius = isMobile ? 6 : 11;
 
-	this.playing = false;
-	this.playerRadius = 11;
+		this.playerX = this.START.x;
+		this.playerY = this.START.y;
 
-	this.playerX = this.START.x;
-	this.playerY = this.START.y;
+		this.img.onload = () => {
+			this.canvas.width = this.img.width;
+			this.canvas.height = this.img.height;
 
-	this.img.onload = () => {
-		this.canvas.width = this.img.width;
-		this.canvas.height = this.img.height;
+			this.collisionCanvas.width = this.img.width;
+			this.collisionCanvas.height = this.img.height;
+			this.collisionCtx.drawImage(this.img, 0, 0);
+			this.positionStartElement(); // 👈 ВАЖНО
+			this.draw();
+		};
 
-		this.collisionCanvas.width = this.img.width;
-		this.collisionCanvas.height = this.img.height;
-		this.collisionCtx.drawImage(this.img, 0, 0);
-
-		this.draw();
-	};
-
-	this.initEvents();
-}
-
-initEvents() {
-	// мышь
-	this.canvas.addEventListener("mousedown", e => this.startGame(this.getCoords(e)));
-	this.canvas.addEventListener("mousemove", e => this.move(this.getCoords(e)));
-	this.canvas.addEventListener("mouseup", () => this.resetPlayer());
-	this.canvas.addEventListener("mouseleave", () => {
-		if (this.playing) this.lose();
-	});
-
-	// тач
-	this.canvas.addEventListener("touchstart", e =>
-		this.startGame(this.getCoords(e.touches[0]))
-	);
-
-	this.canvas.addEventListener("touchmove", e => {
-		e.preventDefault();
-		this.move(this.getCoords(e.touches[0]));
-	});
-
-	this.canvas.addEventListener("touchend", () => this.resetPlayer());
-
-	window.addEventListener("resize", () => this.draw());
-}
-
-getCoords(e) {
-	const rect = this.canvas.getBoundingClientRect();
-	const scaleX = this.canvas.width / rect.width;
-	const scaleY = this.canvas.height / rect.height;
-
-	return {
-		x: Math.floor((e.clientX - rect.left) * scaleX),
-		y: Math.floor((e.clientY - rect.top) * scaleY)
-	};
-}
-
-inCircle(x, y, circle) {
-	const dx = x - circle.x;
-	const dy = y - circle.y;
-	return dx * dx + dy * dy <= circle.r * circle.r;
-}
-
-// проверка финишной линии
-isOnFinishLine(x, y) {
-	const { x1, y1, x2, y2 } = this.FINISH;
-
-	const A = x - x1;
-	const B = y - y1;
-	const C = x2 - x1;
-	const D = y2 - y1;
-
-	const dot = A * C + B * D;
-	const lenSq = C * C + D * D;
-	let param = dot / lenSq;
-
-	if (param < 0) param = 0;
-	else if (param > 1) param = 1;
-
-	const closestX = x1 + param * C;
-	const closestY = y1 + param * D;
-
-	const dx = x - closestX;
-	const dy = y - closestY;
-
-	const distance = Math.sqrt(dx * dx + dy * dy);
-
-	return distance <= this.playerRadius + 2;
-}
-
-checkCollision(x, y) {
-	if (x < 0 || x >= this.canvas.width || y < 0 || y >= this.canvas.height) {
-		return true;
+		this.initEvents();
 	}
 
-	const [r, g, b] = this.collisionCtx.getImageData(x, y, 1, 1).data;
-	return r < 40 && g < 40 && b < 40;
-}
+	positionStartElement() {
+		if (!this.startEl) return;
 
-startGame({ x, y }) {
-	if (this.inCircle(x, y, this.START)) {
-		this.playing = true;
+		// только десктоп
+		if (window.innerWidth <= 767) return;
 
-		if (this.startEl) {
-			this.startEl.classList.add("is-active");
+		const rect = this.canvas.getBoundingClientRect();
+
+		// масштаб
+		const scaleX = rect.width / this.canvas.width;
+		const scaleY = rect.height / this.canvas.height;
+
+		// координаты центра старта
+		const x = this.START.x * scaleX;
+		const y = this.START.y * scaleY;
+
+		// берём реальные размеры элемента из CSS
+		const elWidth = this.startEl.offsetWidth;
+		const elHeight = this.startEl.offsetHeight;
+
+		// позиционируем по центру
+		this.startEl.style.left = `${x - elWidth / 2}px`;
+		this.startEl.style.top = `${y - elHeight / 2}px`;
+	}
+	
+	initEvents() {
+		// мышь
+		this.canvas.addEventListener("mousedown", e => this.startGame(this.getCoords(e)));
+		this.canvas.addEventListener("mousemove", e => this.move(this.getCoords(e)));
+		this.canvas.addEventListener("mouseup", () => this.resetPlayer());
+		this.canvas.addEventListener("mouseleave", () => {
+			if (this.playing) this.lose();
+		});
+
+		// тач
+		this.canvas.addEventListener("touchstart", e =>
+			this.startGame(this.getCoords(e.touches[0]))
+		);
+
+		this.canvas.addEventListener("touchmove", e => {
+			e.preventDefault();
+			this.move(this.getCoords(e.touches[0]));
+		});
+
+		this.canvas.addEventListener("touchend", () => this.resetPlayer());
+
+		window.addEventListener("resize", () => this.draw());
+	}
+
+	getCoords(e) {
+		const rect = this.canvas.getBoundingClientRect();
+		const scaleX = this.canvas.width / rect.width;
+		const scaleY = this.canvas.height / rect.height;
+
+		return {
+			x: Math.floor((e.clientX - rect.left) * scaleX),
+			y: Math.floor((e.clientY - rect.top) * scaleY)
+		};
+	}
+
+	inCircle(x, y, circle) {
+		const dx = x - circle.x;
+		const dy = y - circle.y;
+		return dx * dx + dy * dy <= circle.r * circle.r;
+	}
+
+	// проверка финишной линии
+	isOnFinishLine(x, y) {
+		const { x1, y1, x2, y2 } = this.FINISH;
+
+		const A = x - x1;
+		const B = y - y1;
+		const C = x2 - x1;
+		const D = y2 - y1;
+
+		const dot = A * C + B * D;
+		const lenSq = C * C + D * D;
+		let param = dot / lenSq;
+
+		if (param < 0) param = 0;
+		else if (param > 1) param = 1;
+
+		const closestX = x1 + param * C;
+		const closestY = y1 + param * D;
+
+		const dx = x - closestX;
+		const dy = y - closestY;
+
+		const distance = Math.sqrt(dx * dx + dy * dy);
+
+		return distance <= this.playerRadius + 2;
+	}
+
+	checkCollision(x, y) {
+		if (x < 0 || x >= this.canvas.width || y < 0 || y >= this.canvas.height) {
+			return true;
+		}
+
+		const [r, g, b] = this.collisionCtx.getImageData(x, y, 1, 1).data;
+		return r < 40 && g < 40 && b < 40;
+	}
+
+	startGame({ x, y }) {
+		if (this.inCircle(x, y, this.START)) {
+			this.playing = true;
+
+			if (this.startEl) {
+				this.startEl.classList.add("is-active");
+			}
 		}
 	}
-}
 
-move({ x, y }) {
-	if (!this.playing) return;
+	move({ x, y }) {
+		if (!this.playing) return;
 
-	if (this.checkCollision(x, y)) {
-		this.lose();
-		return;
+		if (this.checkCollision(x, y)) {
+			this.lose();
+			return;
+		}
+
+		this.playerX = x;
+		this.playerY = y;
+
+		if (this.isOnFinishLine(x, y)) {
+			this.win();
+			return;
+		}
+
+		this.draw();
 	}
 
-	this.playerX = x;
-	this.playerY = y;
+	draw() {
+		const { ctx, canvas } = this;
 
-	if (this.isOnFinishLine(x, y)) {
-		this.win();
-		return;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(this.img, 0, 0);
+
+		ctx.beginPath();
+		ctx.arc(this.START.x, this.START.y, this.START.r, 0, Math.PI * 2);
+		ctx.fillStyle = "transparent";
+		ctx.fill();
+
+		// финиш (невидимая линия)
+		ctx.beginPath();
+		ctx.moveTo(this.FINISH.x1, this.FINISH.y1);
+		ctx.lineTo(this.FINISH.x2, this.FINISH.y2);
+		ctx.strokeStyle = "transparent";
+		ctx.lineWidth = 16;
+		ctx.stroke();
+
+		// игрок
+		ctx.beginPath();
+		ctx.arc(this.playerX, this.playerY, this.playerRadius, 0, Math.PI * 2);
+		ctx.fillStyle = "#EB631C";
+		ctx.fill();
 	}
 
-	this.draw();
-}
+	resetPlayer() {
+		this.playing = false;
+		this.playerX = this.START.x;
+		this.playerY = this.START.y;
 
-draw() {
-	const { ctx, canvas } = this;
+		if (this.startEl) {
+			this.startEl.classList.remove("is-active");
+		}
 
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.drawImage(this.img, 0, 0);
-
-	// старт (невидимый)
-	ctx.beginPath();
-	ctx.arc(this.START.x, this.START.y, this.START.r, 0, Math.PI * 2);
-	ctx.fillStyle = "transparent";
-	ctx.fill();
-
-	// финиш (невидимая линия)
-	ctx.beginPath();
-	ctx.moveTo(this.FINISH.x1, this.FINISH.y1);
-	ctx.lineTo(this.FINISH.x2, this.FINISH.y2);
-	ctx.strokeStyle = "transparent";
-	ctx.lineWidth = 6;
-	ctx.stroke();
-
-	// игрок
-	ctx.beginPath();
-	ctx.arc(this.playerX, this.playerY, this.playerRadius, 0, Math.PI * 2);
-	ctx.fillStyle = "#EB631C";
-	ctx.fill();
-}
-
-resetPlayer() {
-	this.playing = false;
-	this.playerX = this.START.x;
-	this.playerY = this.START.y;
-
-	if (this.startEl) {
-		this.startEl.classList.remove("is-active");
+		this.draw();
 	}
-
-	this.draw();
-}
 
 	lose() {
 		this.body.classList.remove('is-success');
@@ -427,13 +458,44 @@ resetPlayer() {
 	}
 }
 
-// запуск
-const game = new MazeGame(
-	"mazeCanvas",
-	"assets/images/maze.png",
-	{ x: 144, y: 90, r: 40 },
-	{ x1: 1310, y1: 400, x2: 1310, y2: 355 }
-);
+// Настройки для десктопа
+const desktopConfig = {
+	canvasId: "mazeCanvas",
+	imgSrc: "assets/images/maze.png",
+	START: { x: 144, y: 90, r: 40 },
+	FINISH: { x1: 1310, y1: 400, x2: 1310, y2: 355 }
+};
+
+// Настройки для мобильной версии
+const mobileConfig = {
+	canvasId: "mazeCanvas",
+	imgSrc: "assets/images/maze-mobile.png",
+	START: { x: 320, y: 70, r: 30 },
+	FINISH: { x1: 164, y1: 800, x2: 164, y2: 660 }
+};
+
+// Удаляем старый канвас/игру, если ресайз
+function initMazeGame() {
+	const canvas = document.getElementById("mazeCanvas");
+	if (!canvas) return;
+
+	// Определяем экран
+	const isMobile = window.innerWidth < 768;
+
+	// Настройки под экран
+	const config = isMobile ? mobileConfig : desktopConfig;
+
+	// Инициализация игры
+	new MazeGame(config.canvasId, config.imgSrc, config.START, config.FINISH);
+}
+
+// Инициализация при загрузке
+window.addEventListener("load", initMazeGame);
+// Обновление при изменении размера
+window.addEventListener("resize", () => {
+	// Для перезапуска игры при изменении ориентации экрана
+	initMazeGame();
+});
 
 const resetBtn = document.querySelector('.error-reset');
 

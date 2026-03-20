@@ -15,13 +15,14 @@
 
   &__figure {
     position: absolute;
-    top: -30px;
-    left: 0;
+    top: 50%;
+    left: 50%;
     border: 2px solid #000;
     width: 100%;
-    height: 400px;
+    height: 260px;
     border-radius: 50%;
-    animation: heightBounceCorpus 3s ease-in-out infinite;
+    transform: translate(-50%, -50%);
+    animation: figureResize 2.6s infinite;
   }
 
   &__content {
@@ -153,61 +154,78 @@
     margin-bottom: 8px;
   }
 
-  &__tooltip-name {
-  }
-
   &__tooltip-value {
     text-transform: lowercase;
   }
 }
 
+@media #{vars.$normal} {
+  .corpus {
+    &__dot {
+      &--1 {
+        display: none;
+      }
+      &--2 {
+        top: auto;
+        bottom: 6%;
+        left: auto;
+        right: 20px;
+      }
+      &--3 {
+        top: 25%;
+        left: 60%;
+      }
+      &--4 {
+        top: auto;
+        bottom: 6%;
+        left: 20px;
+      }
+    }
+
+    &__text-decor {
+      margin-left: auto;
+      margin-bottom: 32px;
+    }
+
+    &__instruction {
+      margin-left: 0;
+    }
+  }
+}
+
 @keyframes heightBounceCorpus {
-  /* исходное */
   0% {
     width: 100%;
     height: 400px;
   }
-
-  /* плавное сжатие */
   35% {
     width: 20%;
-    height: 80px; /* 400 * 0.2 */
+    height: 80px;
   }
-
-  /* минимум */
   45% {
     width: 10%;
-    height: 40px; /* 400 * 0.1 */
+    height: 40px;
   }
-
-  /* ОТСКОК */
   52% {
     width: 18%;
     height: 72px;
   }
-
   58% {
     width: 11%;
     height: 44px;
   }
-
   64% {
     width: 14%;
     height: 56px;
   }
-
   70% {
     width: 10%;
     height: 40px;
   }
-
-  /* пауза */
   80% {
     width: 10%;
     height: 40px;
   }
-
-  /* раскрытие */
   100% {
     width: 100%;
     height: 400px;
@@ -215,7 +233,7 @@
 }
 
 .swiper {
-  height: 560px; /* общая высота слайдера */
+  height: 560px;
 }
 
 .swiper-slide {
@@ -225,19 +243,21 @@
 }
 
 .swiper-wrapper {
-  cursor: pointer;
+  //   cursor: pointer;
 }
 
-.swiper-wrapper:hover {
-  .swiper-slide-active .corpus__tooltip {
-    opacity: 1;
+@media (hover: hover) {
+  .swiper-wrapper:hover {
+    .swiper-slide-active .corpus__tooltip {
+      opacity: 1;
+    }
   }
 }
 
 .swiper-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* картинка полностью заполняет слайд */
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -250,21 +270,19 @@
   opacity: 1;
 }
 
-/* Сброс всего, что задаёт Swiper */
 .corpus__contorls .swiper-button-prev,
 .corpus__contorls .swiper-button-next {
-  all: unset; /* сброс почти всех стилей */
-  display: inline-block; /* чтобы можно было задать размеры */
+  all: unset;
+  display: inline-block;
   width: 40px;
   height: 40px;
-  cursor: pointer;
-  position: relative; /* для своих иконок */
+  //   cursor: pointer;
+  position: relative;
 }
 
-/* Если тебе не нужна стрелка через ::after */
 .corpus__contorls .swiper-button-prev::after,
 .corpus__contorls .swiper-button-next::after {
-  content: none; /* убираем стандартные стрелки */
+  content: none;
 }
 
 .corpus__contorls .swiper-button-prev,
@@ -281,4 +299,10 @@
 .corpus__contorls .swiper-button-prev:hover,
 .corpus__contorls .swiper-button-next:hover {
   opacity: 1;
+}
+
+@media #{vars.$small} {
+  .swiper {
+    height: 330px;
+  }
 }

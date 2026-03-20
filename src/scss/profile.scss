@@ -1,3 +1,6 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
 .profile {
   padding: 80px 0;
   background-color: #d8dacb;
@@ -35,7 +38,7 @@
   &__state {
     position: relative;
     height: 1100px;
-    width: 100%;
+    width: 1440px;
     flex-shrink: 0;
     pointer-events: none;
   }
@@ -57,17 +60,18 @@
   &__cards {
     padding-top: 200px;
     position: absolute;
-    left: 40px;
+    left: -30px;
 
     &--right {
       left: auto;
-      right: 40px;
+      right: -30px;
     }
   }
 
   &__card {
     position: relative;
     display: flex;
+    z-index: 1;
     align-items: center;
     justify-content: center;
     border-radius: 9px;
@@ -76,10 +80,13 @@
     color: #fff;
     width: 294px;
     height: 137px;
+    cursor: grab;
     transition:
       background-color 0.3s,
       color 0.3s,
       border-color 0.3s;
+
+    transform: var(--card-transform, none);
 
     &.is-active {
       background-color: #01fe48;
@@ -87,7 +94,12 @@
       border-color: #01fe48;
     }
 
-    // transition: transform 0.3s;
+    &.dragging {
+      position: absolute;
+      z-index: 1000;
+      cursor: grabbing;
+      opacity: 0.9;
+    }
 
     &::before {
       content: "";
@@ -102,75 +114,113 @@
     }
 
     &--1 {
-      transform: rotate(-6deg) translateX(130px);
+      --card-transform: rotate(-6deg) translateX(130px);
     }
     &--2 {
-      transform: rotate(-10deg) translateX(120px);
+      --card-transform: rotate(-10deg) translateX(120px);
     }
     &--3 {
-      transform: rotate(7deg) translateX(100px);
+      --card-transform: rotate(7deg) translateX(100px);
     }
     &--4 {
-      transform: rotate(-2deg) translateX(100px);
+      --card-transform: rotate(-2deg) translateX(100px);
     }
     &--5 {
-      transform: rotate(5deg) translateX(-140px);
+      --card-transform: rotate(5deg) translateX(-140px);
     }
     &--6 {
-      transform: rotate(-8deg) translateX(-120px);
+      --card-transform: rotate(-8deg) translateX(-120px);
     }
     &--7 {
-      transform: rotate(7deg) translateX(-100px);
+      --card-transform: rotate(7deg) translateX(-100px);
     }
     &--8 {
-      transform: rotate(2deg) translateX(-100px);
+      --card-transform: rotate(2deg) translateX(-100px);
     }
   }
 }
 
-// обработка драга
-.profile__state {
-  position: relative;
+@media #{vars.$normal} {
+  .profile {
+    &__header {
+      flex-direction: column;
+    }
+
+    &__header-content {
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    &__board {
+      margin-top: 0;
+    }
+
+    &__cards {
+      left: -60px;
+
+      &--right {
+        left: auto;
+        right: -60px;
+      }
+    }
+  }
 }
 
-.profile__card {
-  cursor: grab;
-}
+@media #{vars.$normal} {
+  .profile {
+    &__board {
+      padding-top: 300px;
+      position: relative;
+      width: calc(100% + 40px);
+      margin-left: -20px;
+    }
 
-.profile__card.dragging {
-  position: absolute;
-  z-index: 1000;
-  cursor: grabbing;
-  opacity: 0.9;
-}
+    &__state {
+      height: 459px;
+      aspect-ratio: 1;
+    }
 
-.profile__card {
-  --card-transform: none;
-  transform: var(--card-transform);
-}
+    &__cards {
+      left: 50%;
+      padding-top: 0;
+      position: absolute;
+      top: 40px;
 
-.profile__card--1 {
-  --card-transform: rotate(-6deg) translateX(130px);
-}
-.profile__card--2 {
-  --card-transform: rotate(-10deg) translateX(120px);
-}
-.profile__card--3 {
-  --card-transform: rotate(7deg) translateX(100px);
-}
-.profile__card--4 {
-  --card-transform: rotate(-2deg) translateX(100px);
-}
+      &--right {
+        left: auto;
+        right: 50%;
+      }
+    }
 
-.profile__card--5 {
-  --card-transform: rotate(5deg) translateX(-140px);
-}
-.profile__card--6 {
-  --card-transform: rotate(-8deg) translateX(-120px);
-}
-.profile__card--7 {
-  --card-transform: rotate(7deg) translateX(-100px);
-}
-.profile__card--8 {
-  --card-transform: rotate(2deg) translateX(-100px);
+    &__card {
+      width: 220px;
+      height: 70px;
+      font-size: 12px;
+
+      &--1 {
+        --card-transform: rotate(11deg) translateX(0px) translateY(10px);
+      }
+      &--2 {
+        --card-transform: rotate(8deg) translateX(0px);
+      }
+      &--3 {
+        --card-transform: rotate(-7deg) translateX(0px) translateY(-10px);
+      }
+      &--4 {
+        --card-transform: rotate(-2deg) translateX(0px) translateY(-10px);
+      }
+      &--5 {
+        --card-transform: rotate(-5deg) translateX(20px);
+      }
+      &--6 {
+        --card-transform: rotate(-8deg) translateX(10px);
+      }
+      &--7 {
+        --card-transform: rotate(3deg) translateX(18px) translateY(-10px);
+      }
+      &--8 {
+        --card-transform: rotate(-3deg) translateX(0px) translateY(-10px);
+      }
+    }
+  }
 }
