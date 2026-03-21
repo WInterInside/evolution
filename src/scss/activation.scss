@@ -289,6 +289,7 @@ body.is-activated {
 
 @media #{vars.$xsmall} {
   .activation {
+    padding: 100px 0 70px 0;
     &__game {
       max-width: 358px;
       height: 712px;
