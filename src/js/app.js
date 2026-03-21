@@ -518,3 +518,99 @@ if (activeBtn) {
     document.body.classList.add('is-activated');
   });
 }
+
+(function () {
+  const SELECTOR_1 = ".header__body";
+  const SELECTOR_2 = ".activation__text-decor img";
+  const SELECTOR_3 = ".activation__instruction";
+
+  let svg;
+
+  function createSVG() {
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("id", "connector-svg");
+
+    Object.assign(svg.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      zIndex: 9999
+    });
+
+    document.body.appendChild(svg);
+  }
+
+  function getCenter(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width / 2 + window.scrollX,
+      y: rect.top + rect.height / 2 + window.scrollY
+    };
+  }
+
+  function drawCurve(p1, p2) {
+    const dx = Math.abs(p1.x - p2.x) * 0.5;
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+    const d = `
+      M ${p1.x} ${p1.y}
+      C ${p1.x + dx} ${p1.y},
+        ${p2.x - dx} ${p2.y},
+        ${p2.x} ${p2.y}
+    `;
+
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "#000");
+    path.setAttribute("stroke-width", "2");
+
+    // анимация
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length;
+    path.style.strokeDashoffset = length;
+
+    path.getBoundingClientRect();
+    path.style.transition = "stroke-dashoffset 1.2s ease";
+    path.style.strokeDashoffset = "0";
+
+    svg.appendChild(path);
+  }
+
+  function draw() {
+    const el1 = document.querySelector(SELECTOR_1);
+    const el2 = document.querySelector(SELECTOR_2);
+    const el3 = document.querySelector(SELECTOR_3);
+
+    if (!el1 || !el2 || !el3) return;
+
+    if (!svg) createSVG();
+
+    svg.innerHTML = "";
+
+    const p1 = getCenter(el1);
+    const p2 = getCenter(el2);
+    const p3 = getCenter(el3);
+
+    // линия 1
+    drawCurve(p1, p2);
+
+    // линия 2
+    drawCurve(p1, p3);
+  }
+
+  function init() {
+    draw();
+    window.addEventListener("resize", draw);
+    window.addEventListener("scroll", draw);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
