@@ -43,6 +43,22 @@
   &__text-decor {
     margin-top: 108px;
     margin-left: 25%;
+    position: relative;
+    padding-top: 24px;
+    width: max-content;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 999;
+      top: 0;
+      left: calc(50% - 6px);
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #000;
+    }
   }
 
   &__instruction {
@@ -52,6 +68,21 @@
     width: 316px;
     margin-left: auto;
     margin-right: 200px;
+    padding-top: 24px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #000;
+    }
 
     & span:first-child {
       font-weight: 700;
@@ -59,6 +90,7 @@
 
     & span:nth-child(2) {
       text-transform: none;
+      letter-spacing: -2%;
     }
   }
 
@@ -92,7 +124,7 @@
     display: flex;
     z-index: 99;
     max-width: 1328px;
-    margin: 0 auto;
+    // margin: 0 auto;
     opacity: 1;
     transition: opacity 0.3s;
     pointer-events: auto;
@@ -225,8 +257,6 @@
 }
 
 body.is-success {
-  overflow: hidden;
-
   & .activation__message {
     opacity: 1;
     pointer-events: auto;

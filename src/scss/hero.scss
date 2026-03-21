@@ -26,12 +26,13 @@
 
   &__text {
     position: absolute;
-    padding: 8px 16px;
+    padding: 8px 16px 6px 16px;
     border-radius: 40px;
     border: 1px solid #000;
     top: 50%;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 24px;
+    letter-spacing: -12%;
 
     &--left {
       left: 15%;
@@ -52,7 +53,7 @@
 
   &__line {
     width: calc(100% - 80px);
-    height: 1px;
+    height: 2px;
     background-color: #000;
   }
 }

@@ -4,18 +4,27 @@
 .ticket {
   transform: translateY(100vh);
   position: fixed;
-  height: 88vh;
+  height: 90vh;
+  max-height: 734px;
+  width: 350px;
   bottom: 20px;
   right: 20px;
   display: flex;
   flex-direction: column-reverse;
-  gap: 20px;
   border: 2px solid #000;
   border-radius: 0 0 80px 80px;
   background-color: #d8dacb;
   z-index: 1001;
   overflow: hidden;
   transition: transform 0.3s;
+
+  &__img {
+    position: relative;
+
+    & img {
+      margin: 0 auto;
+    }
+  }
 
   &__preview {
     position: absolute;
@@ -28,7 +37,8 @@
 
   &__footer {
     display: flex;
-    height: 168px;
+    flex-shrink: 0;
+    height: 138px;
     position: relative;
     background: linear-gradient(180deg, #d8dacb 30.88%, #01fe48 100%);
 
@@ -45,11 +55,10 @@
   }
 
   &__content {
-    padding: 20px;
-    width: 400px;
-    height: 700px;
-    display: flex;
     position: relative;
+    height: calc(90vh - 138px);
+    max-height: calc(734px - 138px);
+    width: 350px;
 
     & img {
       position: absolute;
@@ -59,17 +68,47 @@
       object-fit: contain;
     }
   }
+
+  &__wrapper {
+    padding: 20px;
+    height: 360px;
+    width: calc(806px - 138px);
+    gap: 80px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform: rotate(-90deg) translateY(-154px) translateX(-150px);
+    // & img {
+    //   width: 50%;
+    //   margin: 0 auto;
+    // }
+  }
+
+  &__data {
+    display: flex;
+    width: 100%;
+    font-size: 12px;
+    justify-content: space-between;
+  }
+
+  &__label {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  &__warning {
+    font-size: 12px;
+    text-align: center;
+    padding: 12px 16px;
+    border: 1px solid #000;
+  }
 }
 
 @media #{vars.$xsmall} {
   .ticket {
-    // width: 100%;
-    // right: 0;
-    // bottom: auto;
-    // top: 0;
-    // height: 90vh;
-    right: 0;
-    width: 100%;
+    width: calc(100% - 40px);
+    right: 20px;
   }
 }
 

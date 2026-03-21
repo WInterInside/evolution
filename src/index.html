@@ -14,7 +14,6 @@
 	<div class="wrapper">
 		<div class="error-overlay">
 			<span>ошибка стабилизации</span>
-			<button class="error-reset">Повторить попытку</button>
 		</div>
 
 		<div class="greed-overlay"></div>
@@ -23,19 +22,24 @@
 			<div class="ticket__footer">
 				<img class="ticket__preview" src="assets/images/1.png" />
 			</div>
-			<div class="ticket__content">
+			<div class="ticket__content">				
 				<img  src="assets/images/ticket-img.jpg" />
-				<!-- <span class="ticket__label">СИНАПС</span>
-				<div class="ticket__data">
-					<span>капсула активирована</span>
-					<span>cx-2046-∆17</span>
-					<span>спектральный</span>
-					<span>23-02-2026</span>
-				</div>
-				<img class="ticket__img" src="assets/images/ticket-img.png" />
-				<div class="ticket__warning">
-					<h3>внимание!</h3>
-					<span>Данная капсула функционирует в соответствии с выбранным интеллектуальным профилем. Изменение поведенческих параметров без повторной калибровки не рекомендуется.</span>
+				
+				<!-- <div class="ticket__wrapper">
+					<div class="ticket__data">
+						<span>капсула активирована</span>
+						<span>cx-2046-∆17</span>
+						<span>спектральный</span>
+						<span>23-02-2026</span>
+					</div>
+					<div class="ticket__img">					
+						<span class="ticket__label">СИНАПС</span>
+						<img  src="assets/images/ticket-img.png" />
+					</div>
+					<div class="ticket__warning">
+						<h3>внимание!</h3>
+						<span>Данная капсула функционирует в соответствии с выбранным интеллектуальным профилем. Изменение поведенческих параметров без повторной калибровки не рекомендуется.</span>
+					</div>
 				</div> -->
 			</div>
 		</div>
@@ -63,7 +67,9 @@
 			<section class="profile">
 				<div class="container">
 					<div class="profile__header">
-						<img class="profile__text-decor" src="assets/images/profile-text.svg" alt="" />
+						<div class="profile__text-decor">
+							<img src="assets/images/profile-text.svg" alt="" />
+						</div>
 						<div class="profile__header-content">
 							<span>[Протокол активации]</span>
 							<span>Размести модули на биологической модели. Допустимая конфигурация — до 3 единиц. Перегрузка приведёт к сбою</span>
@@ -97,137 +103,139 @@
 			</section>
 
 			<section class="corpus">
-				<div class="corpus__dot corpus__dot--1"></div>
-				<div class="corpus__dot corpus__dot--2"></div>
-				<div class="corpus__dot corpus__dot--3"></div>
-				<div class="corpus__dot corpus__dot--4"></div>
 				<div class="container">
 					<div class="corpus__content">
 						<div class="corpus__figure"></div>
 						<span class="corpus__text">кпсл</span>
 						<img class="corpus__text-title" src="assets/images/eczo-title.svg" alt="" />
 					</div>
-					<img class="corpus__text-decor" src="assets/images/curpus-title.svg" alt="" />
+					
+					<div class="corpus__text-decor">
+						<img src="assets/images/curpus-title.svg" alt="" />
+					</div>
 					<div class="corpus__instruction">
 						<span>[инструкция]</span>
 						<span>Внешняя оболочка влияет на восприятие и характер интеграции модулей. Выберите форму, соответсвующую вашей конфигурации</span>
 					</div>
 				</div>
+				
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<img src="assets/images/1.png" />
+							<div class="corpus__tooltip">
+								<div class="corpus__tooltip-content">
+									<h3 class="corpus__tooltip-caption">[характеристики]</h3>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">совместимость:</div>
+										<div class="corpus__tooltip-value">+94%</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">стабильность:</div>
+										<div class="corpus__tooltip-value">+высокая</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">режим интеграции:</div>
+										<div class="corpus__tooltip-value">+стандартный</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-				<div class="container">
-					<div class="swiper">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<img src="assets/images/1.png" />
-								<div class="corpus__tooltip">
-									<div class="corpus__tooltip-content">
-										<h3 class="corpus__tooltip-caption">[характеристики]</h3>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">совместимость:</div>
-											<div class="corpus__tooltip-value">+94%</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">стабильность:</div>
-											<div class="corpus__tooltip-value">+высокая</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">режим интеграции:</div>
-											<div class="corpus__tooltip-value">+стандартный</div>
-										</div>
+						<div class="swiper-slide">
+							<img src="assets/images/2.png" />
+							<div class="corpus__tooltip">
+								<div class="corpus__tooltip-content">
+									<h3 class="corpus__tooltip-caption">[характеристики]</h3>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">совместимость:</div>
+										<div class="corpus__tooltip-value">+94%</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">стабильность:</div>
+										<div class="corpus__tooltip-value">+высокая</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">режим интеграции:</div>
+										<div class="corpus__tooltip-value">+стандартный</div>
 									</div>
 								</div>
 							</div>
-							<div class="swiper-slide">
-								<img src="assets/images/2.png" />
-								<div class="corpus__tooltip">
-									<div class="corpus__tooltip-content">
-										<h3 class="corpus__tooltip-caption">[характеристики]</h3>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">совместимость:</div>
-											<div class="corpus__tooltip-value">+94%</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">стабильность:</div>
-											<div class="corpus__tooltip-value">+высокая</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">режим интеграции:</div>
-											<div class="corpus__tooltip-value">+стандартный</div>
-										</div>
+						</div>
+
+						<div class="swiper-slide">
+							<img src="assets/images/5.png" />
+							<div class="corpus__tooltip">
+								<div class="corpus__tooltip-content">
+									<h3 class="corpus__tooltip-caption">[характеристики]</h3>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">совместимость:</div>
+										<div class="corpus__tooltip-value">+94%</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">стабильность:</div>
+										<div class="corpus__tooltip-value">+высокая</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">режим интеграции:</div>
+										<div class="corpus__tooltip-value">+стандартный</div>
 									</div>
 								</div>
 							</div>
-							<div class="swiper-slide">
-								<img src="assets/images/4.png" />
-								<div class="corpus__tooltip">
-									<div class="corpus__tooltip-content">
-										<h3 class="corpus__tooltip-caption">[характеристики]</h3>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">совместимость:</div>
-											<div class="corpus__tooltip-value">+94%</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">стабильность:</div>
-											<div class="corpus__tooltip-value">+высокая</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">режим интеграции:</div>
-											<div class="corpus__tooltip-value">+стандартный</div>
-										</div>
+						</div>
+
+						<div class="swiper-slide">
+							<img src="assets/images/4.png" />
+							<div class="corpus__tooltip">
+								<div class="corpus__tooltip-content">
+									<h3 class="corpus__tooltip-caption">[характеристики]</h3>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">совместимость:</div>
+										<div class="corpus__tooltip-value">+94%</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">стабильность:</div>
+										<div class="corpus__tooltip-value">+высокая</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">режим интеграции:</div>
+										<div class="corpus__tooltip-value">+стандартный</div>
 									</div>
 								</div>
 							</div>
-							<div class="swiper-slide">
-								<img src="assets/images/5.png" />
-								<div class="corpus__tooltip">
-									<div class="corpus__tooltip-content">
-										<h3 class="corpus__tooltip-caption">[характеристики]</h3>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">совместимость:</div>
-											<div class="corpus__tooltip-value">+94%</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">стабильность:</div>
-											<div class="corpus__tooltip-value">+высокая</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">режим интеграции:</div>
-											<div class="corpus__tooltip-value">+стандартный</div>
-										</div>
+						</div>
+						
+						<div class="swiper-slide">
+							<img src="assets/images/6.png" />
+							<div class="corpus__tooltip">
+								<div class="corpus__tooltip-content">
+									<h3 class="corpus__tooltip-caption">[характеристики]</h3>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">совместимость:</div>
+										<div class="corpus__tooltip-value">+94%</div>
 									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<img src="assets/images/6.png" />
-								<div class="corpus__tooltip">
-									<div class="corpus__tooltip-content">
-										<h3 class="corpus__tooltip-caption">[характеристики]</h3>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">совместимость:</div>
-											<div class="corpus__tooltip-value">+94%</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">стабильность:</div>
-											<div class="corpus__tooltip-value">+высокая</div>
-										</div>
-										<div class="corpus__tooltip-row">
-											<div class="corpus__tooltip-name">режим интеграции:</div>
-											<div class="corpus__tooltip-value">+стандартный</div>
-										</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">стабильность:</div>
+										<div class="corpus__tooltip-value">+высокая</div>
+									</div>
+									<div class="corpus__tooltip-row">
+										<div class="corpus__tooltip-name">режим интеграции:</div>
+										<div class="corpus__tooltip-value">+стандартный</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
+				</div>
+				<div class="container">
 					<div class="corpus__contorls">
 						<div class="swiper-button-next"><img src="assets/images/arr-left.svg" /></div>
 						<div class="swiper-title">
+							<span>Глубинная</span>
+							<span>Синергетическая</span>
 							<span>классическая</span>
-							<span>два</span>
-							<span>три</span>
-							<span>четыре</span>
-							<span>пять</span>
+							<span>импульсная</span>
+							<span>Эксперементальная</span>
 						</div>
 						<div class="swiper-button-prev"><img src="assets/images/arr-right.svg" /></div>
 					</div>
@@ -242,7 +250,11 @@
 						<img class="activation__text-title activation__text-title--d" src="assets/images/activation-title-d.svg" alt="" />
 						<img class="activation__text-title activation__text-title--m" src="assets/images/activation-title-m.svg" alt="" />
 					</div>
-					<img class="activation__text-decor" src="assets/images/activation-text.svg" alt="" />
+
+					<div class="activation__text-decor">
+						<img  src="assets/images/activation-text.svg" alt="" />
+					</div>
+
 					<div class="activation__instruction">
 						<span>[протокол калибровки чипа]</span>
 						<span>Захватите управляющий модуль, проведите чип по траектории синхронизации. Избегайте контакта со стенками контура. Поддерживайте стабильность выше критического уровня</span>

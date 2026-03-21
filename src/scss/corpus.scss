@@ -42,8 +42,24 @@
   }
 
   &__text-decor {
+    max-width: max-content;
     margin-top: 108px;
     margin-left: 30%;
+    position: relative;
+    padding-top: 24px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 999;
+      top: 0;
+      left: calc(50% - 6px);
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #000;
+    }
   }
 
   &__instruction {
@@ -52,6 +68,21 @@
     gap: 8px;
     width: 316px;
     margin-left: auto;
+    position: relative;
+    padding-top: 24px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #000;
+    }
 
     & span:first-child {
       font-weight: 700;
@@ -59,31 +90,7 @@
 
     & span:nth-child(2) {
       text-transform: none;
-    }
-  }
-
-  &__dot {
-    position: absolute;
-    width: 12px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background-color: #000;
-
-    &--1 {
-      top: 30%;
-      left: 34%;
-    }
-    &--2 {
-      top: 30%;
-      left: 54%;
-    }
-    &--3 {
-      top: 30%;
-      left: 74%;
-    }
-    &--4 {
-      top: 70%;
-      left: 14%;
+      letter-spacing: -2%;
     }
   }
 
@@ -105,7 +112,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: -180px;
+    right: -130px;
     opacity: 0;
     transition: opacity 0.3s;
 
@@ -234,16 +241,33 @@
 
 .swiper {
   height: 560px;
+  width: 100vw;
+  position: relative;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    z-index: 999;
+    bottom: 40px;
+    left: 40px;
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #000;
+  }
+
+  &::after {
+    left: auto;
+    right: 40px;
+  }
 }
 
 .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.swiper-wrapper {
-  //   cursor: pointer;
 }
 
 @media (hover: hover) {
@@ -276,7 +300,6 @@
   display: inline-block;
   width: 40px;
   height: 40px;
-  //   cursor: pointer;
   position: relative;
 }
 
@@ -304,5 +327,10 @@
 @media #{vars.$small} {
   .swiper {
     height: 330px;
+
+    &::after,
+    &::before {
+      display: none;
+    }
   }
 }

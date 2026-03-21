@@ -195,7 +195,7 @@ const swiper = new Swiper('.swiper', {
 		rotate: 0,
 		stretch: 0,
 		depth: 500,
-		modifier: 1,
+		modifier: 2,
 		slideShadows: false
 	},
 
@@ -503,12 +503,12 @@ window.addEventListener("resize", () => {
 	initMazeGame();
 });
 
-const resetBtn = document.querySelector('.error-reset');
+const errorOverlay = document.querySelector('.error-overlay');
 
-if (resetBtn) {
-	resetBtn.addEventListener('click', () => {
-		document.body.classList.remove('is-error');
-	});
+if (errorOverlay) {
+  errorOverlay.addEventListener('click', () => {
+    document.body.classList.remove('is-error');
+  });
 }
 
 const activeBtn = document.querySelector('.activation__button');

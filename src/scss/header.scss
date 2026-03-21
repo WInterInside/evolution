@@ -5,6 +5,9 @@
   background: linear-gradient(180deg, #01fe48 0%, #d8dacb 100%);
 
   &__img {
+    &--d {
+      padding-left: 20px;
+    }
     &--m {
       display: none;
     }
@@ -12,7 +15,7 @@
 
   &__wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 40px 0;
   }
 
@@ -54,7 +57,7 @@
   &__body {
     position: absolute;
     left: 0;
-    top: 40%;
+    top: 42%;
   }
 
   &__features {
@@ -106,19 +109,21 @@
     }
     &--3 {
       top: 30%;
-      left: 74%;
+      left: auto;
+      right: 40px;
     }
     &--4 {
       top: 70%;
-      left: 14%;
+      left: 40px;
     }
     &--5 {
       top: 70%;
-      left: 34%;
+      left: calc(49% + 6px);
     }
     &--6 {
       top: 70%;
-      left: 84%;
+      left: auto;
+      right: 40px;
     }
   }
 }
