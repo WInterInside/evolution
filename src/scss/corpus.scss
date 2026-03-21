@@ -38,6 +38,7 @@
     border-radius: 40px;
     border: 1px solid #000;
     top: -100px;
+    font-size: 24px;
     font-weight: 700;
   }
 
@@ -325,6 +326,11 @@
 }
 
 @media #{vars.$small} {
+  .corpus {
+    &__text {
+      font-size: 16px;
+    }
+  }
   .swiper {
     height: 330px;
 

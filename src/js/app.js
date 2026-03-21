@@ -526,6 +526,7 @@ if (activeBtn) {
 
   let svg;
 
+  // Создаем SVG для линий
   function createSVG() {
     svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("id", "connector-svg");
@@ -543,6 +544,7 @@ if (activeBtn) {
     document.body.appendChild(svg);
   }
 
+  // Получаем центр элемента
   function getCenter(el) {
     const rect = el.getBoundingClientRect();
     return {
@@ -551,6 +553,16 @@ if (activeBtn) {
     };
   }
 
+  // Нижняя точка элемента
+  function getBottomOfElement(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width / 2 + window.scrollX,
+      y: rect.bottom + window.scrollY // нижняя граница
+    };
+  }
+
+  // Рисуем кривую Безье
   function drawCurve(p1, p2) {
     const dx = Math.abs(p1.x - p2.x) * 0.5;
 
@@ -568,18 +580,19 @@ if (activeBtn) {
     path.setAttribute("stroke", "#000");
     path.setAttribute("stroke-width", "2");
 
-    // анимация
+    // Анимация "рисования линии"
     const length = path.getTotalLength();
     path.style.strokeDasharray = length;
     path.style.strokeDashoffset = length;
 
-    path.getBoundingClientRect();
+    path.getBoundingClientRect(); // триггер рендеринга
     path.style.transition = "stroke-dashoffset 1.2s ease";
     path.style.strokeDashoffset = "0";
 
     svg.appendChild(path);
   }
 
+  // Основная функция рисования линий
   function draw() {
     const el1 = document.querySelector(SELECTOR_1);
     const el2 = document.querySelector(SELECTOR_2);
@@ -591,17 +604,15 @@ if (activeBtn) {
 
     svg.innerHTML = "";
 
-    const p1 = getCenter(el1);
+    const p1 = getBottomOfElement(el1); // нижняя граница header__body
     const p2 = getCenter(el2);
     const p3 = getCenter(el3);
 
-    // линия 1
     drawCurve(p1, p2);
-
-    // линия 2
     drawCurve(p1, p3);
   }
 
+  // Инициализация
   function init() {
     draw();
     window.addEventListener("resize", draw);
