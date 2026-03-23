@@ -40,6 +40,13 @@
     top: -100px;
     font-size: 24px;
     font-weight: 700;
+    letter-spacing: -8%;
+  }
+
+  &__text-title {
+    &--m {
+      display: none;
+    }
   }
 
   &__text-decor {
@@ -60,6 +67,12 @@
       aspect-ratio: 1;
       border-radius: 50%;
       background-color: #000;
+    }
+  }
+
+  &__text-decor-img {
+    &--m {
+      display: none;
     }
   }
 
@@ -113,16 +126,17 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: -130px;
+    left: 50%;
     opacity: 0;
     transition: opacity 0.3s;
+    padding-left: 128px;
 
     &::before,
     &::after {
       content: "";
       display: block;
       position: absolute;
-      left: -128px;
+      left: 0;
       top: 50%;
       background-color: #01fe48;
     }
@@ -169,6 +183,10 @@
 
 @media #{vars.$normal} {
   .corpus {
+    &__figure {
+      border: 1px solid #000;
+    }
+
     &__dot {
       &--1 {
         display: none;
@@ -269,13 +287,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  & img {
+    transform: scale(0.6);
+    transition: transform 0.3s;
+  }
 }
 
-@media (hover: hover) {
-  .swiper-wrapper:hover {
-    .swiper-slide-active .corpus__tooltip {
-      opacity: 1;
-    }
+.swiper-slide-active {
+  & img {
+    transform: scale(1);
   }
 }
 
@@ -325,14 +346,69 @@
   opacity: 1;
 }
 
-@media #{vars.$small} {
-  .corpus {
-    &__text {
-      font-size: 16px;
+@media (hover: hover) {
+  .swiper-wrapper:hover {
+    .swiper-slide-active .corpus__tooltip {
+      opacity: 1;
     }
   }
+}
+
+@media #{vars.$small} {
+  .corpus {
+    padding: 80px 0;
+
+    &__text-decor {
+      width: 171px;
+
+      &::before {
+        width: 8px;
+      }
+    }
+
+    &__text-decor-img {
+      &--d {
+        display: none;
+      }
+      &--m {
+        display: block;
+      }
+    }
+
+    &__instruction {
+      &::before {
+        width: 8px;
+      }
+    }
+
+    &__text {
+      font-size: 16px;
+      padding: 5px 12px 4px 12px;
+      top: -70px;
+    }
+
+    &__text-title {
+      &--m {
+        display: block;
+      }
+
+      &--d {
+        display: none;
+      }
+    }
+
+    &__contorls {
+      gap: 24px;
+
+      & .swiper-title {
+        font-size: 20px;
+      }
+    }
+  }
+
   .swiper {
     height: 330px;
+    margin-top: 54px;
 
     &::after,
     &::before {

@@ -3,7 +3,6 @@
 
 .footer {
   position: relative;
-  height: 154px;
   display: flex;
   align-items: center;
 
@@ -16,7 +15,7 @@
   }
 
   & span {
-    font-size: 24px;
+    font-size: 16px;
   }
 
   &__wrapper {
@@ -24,7 +23,7 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    padding: 20px 0;
+    padding: 20px 0 40px 0;
     font-weight: 600;
     font-size: 24px;
     justify-content: space-between;

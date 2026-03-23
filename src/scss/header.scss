@@ -85,11 +85,13 @@
 
   &__features-number {
     position: absolute;
-    left: 0;
+    left: -6px;
   }
 
   &__features-text {
     padding-left: 38px;
+    letter-spacing: -3%;
+    text-transform: none;
   }
 
   &__dot {
@@ -145,7 +147,7 @@
   }
 }
 
-@media #{vars.$small} {
+@media #{vars.$xsmall} {
   .header {
     &__wrapper {
       flex-direction: column;
@@ -199,7 +201,7 @@
     }
 
     &__features-text {
-      padding-left: 20px;
+      padding-left: 24px;
     }
 
     &__features-caption {
@@ -207,11 +209,7 @@
     }
 
     &__dot {
-      position: absolute;
-      width: 12px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background-color: #000;
+      width: 8px;
 
       &--1,
       &--2,

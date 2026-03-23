@@ -174,8 +174,10 @@
   }
 }
 
-@media #{vars.$normal} {
+@media #{vars.$xsmall} {
   .profile {
+    padding-top: 0;
+
     &__header {
       flex-direction: column;
     }
@@ -187,22 +189,6 @@
 
     &__board {
       margin-top: 0;
-    }
-
-    &__cards {
-      left: -60px;
-
-      &--right {
-        left: auto;
-        right: -60px;
-      }
-    }
-  }
-}
-
-@media #{vars.$normal} {
-  .profile {
-    &__board {
       padding-top: 300px;
       position: relative;
       width: calc(100% + 40px);
@@ -231,6 +217,7 @@
       width: 220px;
       height: 70px;
       font-size: 12px;
+
       &--1 {
         --card-transform: rotate(3deg) translateX(-210px) translateY(50px);
       }
@@ -254,6 +241,23 @@
       }
       &--8 {
         --card-transform: rotate(-3deg) translateX(240px) translateY(-160px);
+      }
+    }
+
+    &__header-content {
+      margin-top: 30px;
+      margin-bottom: 40px;
+    }
+
+    &__text-decor {
+      width: 285px;
+      margin-left: auto;
+    }
+
+    &__text-decor,
+    &__header-content {
+      &::before {
+        width: 8px;
       }
     }
   }

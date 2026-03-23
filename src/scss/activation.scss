@@ -3,7 +3,7 @@
 
 .activation {
   position: relative;
-  padding: 127px 0 140px 0;
+  padding: 127px 0 88px 0;
   background-color: #d8dacb;
 
   &__figure {
@@ -38,11 +38,13 @@
     border: 1px solid #000;
     top: -100px;
     font-weight: 700;
+    letter-spacing: -8%;
+    font-size: 24px;
   }
 
   &__text-decor {
     margin-top: 108px;
-    margin-left: 25%;
+    margin-left: 200px;
     position: relative;
     padding-top: 24px;
     width: max-content;
@@ -61,6 +63,12 @@
     }
   }
 
+  &__text-decor-img {
+    &--m {
+      display: none;
+    }
+  }
+
   &__instruction {
     display: flex;
     flex-direction: column;
@@ -68,6 +76,7 @@
     width: 316px;
     margin-left: auto;
     margin-right: 200px;
+    margin-top: -24px;
     padding-top: 24px;
     position: relative;
 
@@ -144,12 +153,11 @@
 
   &__finish {
     position: absolute;
-    right: -140px;
+    right: -170px;
     bottom: 50%;
-    transform: translateY(70%);
+    transform: translateY(70%) rotate(4deg);
     height: 172px;
     pointer-events: none;
-    // display: none;
   }
 
   &__start {
@@ -286,6 +294,7 @@ body.is-activated {
     opacity: 0;
   }
 }
+
 @media #{vars.$normal} {
   .activation {
     &__instruction {
@@ -305,6 +314,10 @@ body.is-activated {
       }
     }
 
+    &__figure {
+      border: 1px solid #000;
+    }
+
     &__text-decor {
       margin-top: 108px;
       margin-left: auto;
@@ -319,14 +332,47 @@ body.is-activated {
 
 @media #{vars.$xsmall} {
   .activation {
-    padding: 100px 0 70px 0;
+    padding: 100px 0 20px 0;
+
+    &__text {
+      padding: 4px 12px;
+      letter-spacing: -6%;
+      font-size: 16px;
+    }
+
     &__game {
       max-width: 358px;
       height: 712px;
     }
 
+    &__button {
+      margin-top: 70px;
+    }
+
     &__text-decor {
-      width: 100%;
+      width: 289px;
+      margin-left: auto;
+      margin-right: 0;
+      margin-top: 80px;
+
+      &::before {
+        width: 8px;
+      }
+    }
+
+    &__instruction {
+      &::before {
+        width: 8px;
+      }
+    }
+
+    &__text-decor-img {
+      &--d {
+        display: none;
+      }
+      &--m {
+        display: block;
+      }
     }
 
     &__message {
@@ -337,10 +383,10 @@ body.is-activated {
 
     &__finish {
       position: absolute;
-      right: 44px;
+      right: 70px;
       bottom: -64px;
       transform: rotate(95deg);
-      height: 172px;
+      height: 129px;
       pointer-events: none;
     }
 

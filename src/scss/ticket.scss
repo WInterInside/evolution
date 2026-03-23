@@ -4,14 +4,14 @@
 .ticket {
   transform: translateY(100vh);
   position: fixed;
-  height: 90vh;
-  max-height: 734px;
+  height: calc(100vh - 40px);
+  //   max-height: 734px;
   width: 350px;
   bottom: 20px;
-  right: 20px;
+  right: 16px;
   display: flex;
   flex-direction: column-reverse;
-  border: 2px solid #000;
+  border: 1px solid #000;
   border-radius: 0 0 80px 80px;
   background-color: #d8dacb;
   z-index: 1001;
@@ -56,9 +56,10 @@
 
   &__content {
     position: relative;
-    height: calc(90vh - 138px);
-    max-height: calc(734px - 138px);
-    width: 350px;
+    height: 100%;
+    // height: calc(90vh - 138px);
+    // max-height: calc(734px - 138px);
+    // width: 350px;
 
     & img {
       position: absolute;
