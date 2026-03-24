@@ -173,14 +173,101 @@
     }
   }
 }
+@media #{vars.$medium} {
+  .profile {
+    &__header {
+      flex-direction: column;
+    }
+  }
+}
+
+@media #{vars.$small} {
+  .profile {
+    padding-top: 0;
+
+    &__board {
+      position: relative;
+      margin-top: 0;
+      padding-top: 100px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        width: 100vw;
+        height: 2px;
+        background-color: #000;
+      }
+    }
+
+    &__text-decor {
+      width: max-content;
+      margin-left: auto;
+
+      & img {
+        width: 486px;
+        height: 141px;
+      }
+    }
+
+    &__header-content {
+      margin-top: 32px;
+    }
+
+    &__state {
+      height: 828px;
+      margin-top: -80px;
+    }
+
+    &__state-img {
+      height: 695px;
+      top: auto;
+      bottom: 0;
+    }
+
+    &__cards {
+      padding-top: 0;
+      position: absolute;
+      left: 0;
+
+      &--right {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &__card {
+      &--1 {
+        --card-transform: rotate(12deg) translateX(-70px) translateY(-120px);
+      }
+      &--2 {
+        --card-transform: rotate(-2deg) translateX(-70px) translateY(-150px);
+      }
+      &--3 {
+        --card-transform: rotate(7deg) translateX(-90px) translateY(-160px);
+      }
+      &--4 {
+        --card-transform: rotate(-12deg) translateX(-80px) translateY(-210px);
+      }
+      &--5 {
+        --card-transform: rotate(5deg) translateX(60px) translateY(-120px);
+      }
+      &--6 {
+        --card-transform: rotate(-8deg) translateX(80px) translateY(-140px);
+      }
+      &--7 {
+        --card-transform: rotate(7deg) translateX(50px) translateY(-180px);
+      }
+      &--8 {
+        --card-transform: rotate(-4deg) translateX(140px) translateY(-210px);
+      }
+    }
+  }
+}
 
 @media #{vars.$xsmall} {
   .profile {
     padding-top: 0;
-
-    &__header {
-      flex-direction: column;
-    }
 
     &__header-content {
       width: 100%;
@@ -193,12 +280,20 @@
       position: relative;
       width: calc(100% + 40px);
       margin-left: -20px;
+
+      &::before {
+        display: none;
+      }
     }
 
     &__state {
       height: 459px;
       aspect-ratio: 1;
       margin-top: -40px;
+    }
+
+    &__state-img {
+      height: 100%;
     }
 
     &__cards {

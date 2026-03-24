@@ -44,7 +44,8 @@
   }
 
   &__text-title {
-    &--m {
+    &--m,
+    &--t {
       display: none;
     }
   }
@@ -116,6 +117,26 @@
     width: 100%;
     justify-content: center;
     align-items: center;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      z-index: 999;
+      bottom: -100px;
+      left: 40px;
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #000;
+      display: none;
+    }
+
+    &::after {
+      left: auto;
+      right: 40px;
+    }
 
     & .swiper-title {
       font-size: 40px;
@@ -289,7 +310,7 @@
   align-items: center;
 
   & img {
-    transform: scale(0.6);
+    transform: scale(0.5);
     transition: transform 0.3s;
   }
 }
@@ -358,11 +379,83 @@
   .corpus {
     padding: 80px 0;
 
-    &__text-decor {
-      width: 171px;
+    &__contorls {
+      &::after,
+      &::before {
+        display: block;
+      }
+    }
 
+    &__text-decor {
       &::before {
         width: 8px;
+      }
+      margin-right: 20px;
+    }
+
+    &__text-title {
+      &--d,
+      &--m {
+        display: none;
+      }
+      &--t {
+        display: block;
+      }
+    }
+
+    &__instruction {
+      &::before {
+        width: 8px;
+      }
+      margin-left: 70px;
+    }
+
+    &__text {
+      font-size: 16px;
+      padding: 5px 12px 4px 12px;
+      top: -70px;
+    }
+
+    &__text-title {
+      &--d {
+        width: 623px;
+        height: 176px;
+      }
+    }
+  }
+
+  .swiper-3d {
+    perspective: 10000px !important;
+  }
+
+  .swiper {
+    margin-top: 54px;
+
+    &::after,
+    &::before {
+      display: none;
+    }
+  }
+}
+
+@media #{vars.$xsmall} {
+  .corpus {
+    &__text-title {
+      &--m {
+        display: block;
+      }
+      &--t,
+      &--d {
+        display: none;
+      }
+    }
+
+    &__contorls {
+      gap: 24px;
+      position: relative;
+
+      & .swiper-title {
+        font-size: 20px;
       }
     }
 
@@ -374,45 +467,13 @@
         display: block;
       }
     }
+  }
 
-    &__instruction {
-      &::before {
-        width: 8px;
-      }
-    }
-
-    &__text {
-      font-size: 16px;
-      padding: 5px 12px 4px 12px;
-      top: -70px;
-    }
-
-    &__text-title {
-      &--m {
-        display: block;
-      }
-
-      &--d {
-        display: none;
-      }
-    }
-
-    &__contorls {
-      gap: 24px;
-
-      & .swiper-title {
-        font-size: 20px;
-      }
-    }
+  .swiper-3d {
+    perspective: 1200px !important;
   }
 
   .swiper {
     height: 330px;
-    margin-top: 54px;
-
-    &::after,
-    &::before {
-      display: none;
-    }
   }
 }

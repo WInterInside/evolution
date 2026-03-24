@@ -29,6 +29,12 @@
     margin-left: auto;
   }
 
+  &__body {
+    position: absolute;
+    left: 0;
+    top: 42%;
+  }
+
   &__buttons {
     display: flex;
     gap: 8px;
@@ -39,7 +45,7 @@
   }
 
   &__button {
-    padding: 8px 16px;
+    padding: 8px 16px 4px 16px;
     border-radius: 40px;
     border: 1px solid #000;
 
@@ -52,12 +58,7 @@
   &__notice {
     font-weight: 700;
     text-align: right;
-  }
-
-  &__body {
-    position: absolute;
-    left: 0;
-    top: 42%;
+    letter-spacing: 1%;
   }
 
   &__features {
@@ -147,12 +148,102 @@
   }
 }
 
+@media #{vars.$small} {
+  .header {
+    &__wrapper {
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    &__buttons {
+      &--m {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        flex-direction: row-reverse;
+        align-self: flex-start;
+      }
+
+      &--d {
+        display: none;
+      }
+    }
+
+    &__notice {
+      letter-spacing: 0;
+    }
+
+    &__dot {
+      &--1,
+      &--2,
+      &--3 {
+        display: none;
+      }
+
+      &--4 {
+        top: 68%;
+        left: 40px;
+      }
+      &--5 {
+        top: 68%;
+        left: calc(49% + 6px);
+      }
+      &--6 {
+        top: 68%;
+        left: auto;
+        right: 40px;
+      }
+    }
+
+    &__img {
+      &--d {
+        padding-left: 0;
+        align-self: flex-start;
+        width: 588px;
+        height: 295px;
+      }
+    }
+
+    &__side {
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    &__body {
+      position: absolute;
+      left: 330px;
+      top: -290px;
+      width: 60px;
+      height: 146px;
+    }
+
+    &__features {
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    &__features-item {
+      max-width: 100%;
+
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
 @media #{vars.$xsmall} {
   .header {
     &__wrapper {
       flex-direction: column;
       align-items: center;
       gap: 40px;
+    }
+
+    &__notice {
+      letter-spacing: 1%;
     }
 
     &__img {
@@ -175,12 +266,7 @@
 
     &__buttons {
       &--m {
-        display: flex;
-        align-self: flex-start;
-      }
-
-      &--d {
-        display: none;
+        flex-direction: column;
       }
     }
 
